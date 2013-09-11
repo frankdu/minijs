@@ -2,11 +2,14 @@ minijs
 ======
 # Step 1 
 
-Prototype of concept.
+Proof of concept.
 
 #Step 2
 
-Init Optimize.
+Init optimization.
 
 # Step 3
-Useable in prod
+Usable in production
+
+# Reference
+- ECMASript Language Specification. ECMA-262 v5.1, June 2011: http://www.ecma-international.org/publications/files/ECMA-ST/Ecma-262.pdf
