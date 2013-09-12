@@ -1,7 +1,6 @@
 grammar JavaScript;
 
 @header {
-package org.minijs.parser;
 }
 
 program
