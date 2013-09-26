@@ -3,13 +3,13 @@ package org.minijs.core.parser;
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.junit.* ;
+import org.junit.Before;
+import org.junit.Test;
 import org.minijs.core.ast.*;
 import org.minijs.parser.antlr.JavaScriptLexer;
 import org.minijs.parser.antlr.JavaScriptParser;
 
-import static org.junit.Assert.* ;
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 public class AstConstructVisitorTest {
 
@@ -103,5 +103,59 @@ public class AstConstructVisitorTest {
 
             assertEquals(s, literal.getValue());
         }
+    }
+
+    @Test
+    public void testIdentifier() {
+        String[] ids = {
+                "_i", "i", "j_1", "$i"
+        };
+
+        for (String id : ids) {
+            initParser(id);
+            ParseTree tree = parser.primaryExpression();
+            Node node = visitor.visit(tree);
+
+            assertTrue(node instanceof Identifier);
+            Identifier identifier = (Identifier) node;
+
+            assertEquals(id, identifier.getIdentifier());
+        }
+    }
+
+    @Test
+    public void testArrayLiteral() {
+        String literals[] = {"[]", "[2]", "['hello', 'world', 3 + 7]"};
+        int[] expectedLength = {0, 1, 3};
+
+        for (int i = 0; i < literals.length; i++) {
+            String s = literals[i];
+            initParser(s);
+            ParseTree tree = parser.arrayLiteral();
+            Node node = visitor.visit(tree);
+
+            assertTrue(node instanceof ArrayLiteral);
+            ArrayLiteral arrayLiteral = (ArrayLiteral) node;
+
+            assertEquals(expectedLength[i], arrayLiteral.getSubExpressionCount());
+        }
+    }
+
+    @Test
+    public void testParenthesizedExpression() {
+        String expressions[] = {"(3)", "(index)", "(null)", "(\"hello\")"};
+        Class subExpressionClasses[] = {NumberLiteral.class, Identifier.class, NullLiteral.class, StringLiteral.class};
+
+        for (int i = 0; i < expressions.length; i++) {
+            initParser(expressions[i]);
+            ParseTree tree = parser.parenthesizedExpression();
+            Node node = visitor.visit(tree);
+
+            assertTrue(node instanceof ParenthesizedExpression);
+            Expression subExpr = ((ParenthesizedExpression) node).getExpression();
+
+            assertEquals(subExpressionClasses[i], subExpr.getClass());
+        }
+
     }
 }

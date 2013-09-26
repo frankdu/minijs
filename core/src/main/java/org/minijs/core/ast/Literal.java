@@ -1,4 +1,4 @@
 package org.minijs.core.ast;
 
-public interface Literal extends Node {
+public interface Literal extends Expression {
 }

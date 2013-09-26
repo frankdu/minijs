@@ -13,7 +13,7 @@ variableDeclarators
 
 
 variableDeclarator
-    :   Identifier ('=' variableInitializer)?
+    :   IDENTIFIER ('=' variableInitializer)?
     ;
 
 variableInitializer
@@ -28,10 +28,10 @@ statement
     |   expression
     |   variableDeclarators
     |   '{' statement* '}'
-    |   'if' parExpression statement
+    |   'if' parenthesizedExpression statement
         'for' '(' forControl ')' statement
-    |   'while' parExpression statement
-    |   'do' statement 'while' parExpression
+    |   'while' parenthesizedExpression statement
+    |   'do' statement 'while' parenthesizedExpression
     |   'return' expression
     ;
 
@@ -47,15 +47,15 @@ forUpdate
     :   expressionList
     ;
 
-parExpression
+parenthesizedExpression
     :   LPAREN expression RPAREN
     ;
 
 expression
-    :   primary
+    :   primaryExpression
     |   ('+' | '-' | INC | DEC) expression        
     |   NOT expression
-    |   expression '.' Identifier
+    |   expression '.' IDENTIFIER
     |   expression BINARY_OPEATOR expression
     |   expression '[' expression ']'
     |   expression '(' expressionList? ')'
@@ -67,12 +67,15 @@ expressionList
     :   expression (',' expression)*
     ;
 
-
-primary
-    :   '(' expression ')'
-    |   '[' expressionList? ']'
-    |   Identifier
+primaryExpression
+    :   IDENTIFIER
     |   literal
+    |   parenthesizedExpression
+    |   arrayLiteral
+    ;
+
+arrayLiteral
+    :   '[' expressionList? ']'
     ;
 
 literal
@@ -101,7 +104,7 @@ NULL_LITERAL
     :   'null'
     ;
 
-Identifier
+IDENTIFIER
     :   [a-zA-Z$_] [a-zA-Z0-9$_]*
     ;
 
