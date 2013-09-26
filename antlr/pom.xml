@@ -10,7 +10,7 @@
     </parent>
 
     <groupId>org.minijs</groupId>
-    <artifactId>minijs-parser</artifactId>
+    <artifactId>minijs-antlr</artifactId>
     <version>1.0-SNAPSHOT</version>
     <name>minijs-antlr</name>
     <packaging>jar</packaging>
@@ -37,7 +37,6 @@
             <groupId>org.antlr</groupId>
             <artifactId>antlr4</artifactId>
             <version>4.1</version>
-            <classifier>complete</classifier>
         </dependency>
 
         <dependency>

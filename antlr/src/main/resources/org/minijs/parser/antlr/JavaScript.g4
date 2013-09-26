@@ -80,7 +80,7 @@ literal
     |   BOOLEAN_LITERAL
     |   NULL_LITERAL
     |   UNDEFINED_LITERAL
-    |   StringLiteral
+    |   STRING_LITERAL
     ;
 
 BOOLEAN_LITERAL
@@ -88,7 +88,7 @@ BOOLEAN_LITERAL
     |   'false'
     ;
 
-StringLiteral
+STRING_LITERAL
     :   '"' ( ESC_SEQ | ~('\\'|'"') )* '"'
     |   '\'' ( ESC_SEQ | ~('\\'|'\'') )* '\''
     ;
