@@ -52,18 +52,23 @@ parenthesizedExpression
     ;
 
 expression
-    :   primaryExpression
-    |   unaryExpression
-    |   expression '.' IDENTIFIER
-    |   expression binaryOperator expression
-    |   expression '[' expression ']'
-    |   expression '(' expressionList? ')'
-    |   expression (INC | DEC)
-    |   expression '?' expression ':' expression
+    :   expression '.' IDENTIFIER                               #propertyExpression
+    |   expression '[' expression ']'                           #indexorExpression
+    |   expression '(' expressionList? ')'                      #invocationExpression
+    |   primaryExpression                                       #primaryExpression2
+    |   expression (INC | DEC)                                  #postExpression
+    |   unaryExpression                                         #unaryExpression2
+    |   expression ('*' | '/' | '%') expression                 #mulExpression
+    |   expression ('+' | '-') expression                       #plusExpression
+    |   expression ('<' | '<=' | '>' | '>=') expression         #logicCompareExpression
+    |   expression ('==' | '!=' | '====' | '!===') expression   #loginEqualityExpression
+    |   expression '&&' expression                              #loginAndExpression
+    |   expression '||' expression                              #logicOrExpression
+    |   expression '?' expression ':' expression                #conditionalExpression
     ;
 
 unaryExpression
-    :   ('+' | '-' | '!' | INC | DEC) expression
+    :   (INC | DEC | '!' | '+' | '-') expression
     ;
 
 expressionList
@@ -115,22 +120,6 @@ NUMBER
     :   SIGN? INT+ ('.' INT+)? EXPONENT?
     ;
 
-binaryOperator
-    :   '+'
-    |   '-'
-    |   MUL
-    |   DIV
-    |   MOD
-    |   AND
-    |   OR
-    |   GT
-    |   LT
-    |   GE
-    |   LE
-    |   EQ
-    |   NOTEQUAL
-    ;
-
 // Keywords
 VAR:        'var';
 IF:         'if';
@@ -169,10 +158,12 @@ LT:         '<';
 GE:         '>=';
 LE:         '<=';
 EQ:         '==';
-NOTEQUAL:   '!=';
+NEQ:        '!=';
 NOT:        '!';
 INC:        '++';
 DEC:        '--';
+EXACT_EQ:   '===';
+EXACT_NEQ:  '!==';
 
 
 fragment

@@ -1,18 +1,43 @@
 package org.minijs.core.parser;
 
+import edu.emory.mathcs.backport.java.util.Collections;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.minijs.core.ast.*;
+import org.minijs.core.util.Preconditions;
 import org.minijs.parser.antlr.JavaScriptBaseVisitor;
 import org.minijs.parser.antlr.JavaScriptLexer;
 import org.minijs.parser.antlr.JavaScriptParser;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     private static final NullLiteral NULL_LITERAL = new NullLiteral();
     private static final UndefinedLiteral UNDEFINED_LITERAL = new UndefinedLiteral();
+    private static final Map<String, Operator> sOperatorMap = Collections.unmodifiableMap(
+            new HashMap<String, Operator>() {{
+                put("*", Operator.MUL);
+                put("/", Operator.DIV);
+                put("%", Operator.MOD);
+                put("+", Operator.PLUS);
+                put("-", Operator.MINUS);
+
+                put("<", Operator.LT);
+                put("<=", Operator.LE);
+                put(">", Operator.GT);
+                put(">=", Operator.GE);
+                put("==", Operator.EQ);
+                put("!=", Operator.NEQ);
+                put("===", Operator.EXACT_EQ);
+                put("!==", Operator.EXACT_NEQ);
+
+                put("&&", Operator.AND);
+                put("!!", Operator.OR);
+            }}
+    );
 
     @Override
     public Node visitLiteral(@NotNull JavaScriptParser.LiteralContext ctx) {
@@ -47,7 +72,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
         List<Expression> list = new ArrayList<Expression>();
         for (int i = 0; i < exprCount; i++) {
-            Node node = visitExpression(ctx.expression(i));
+            Node node = visit(ctx.expression(i));
             list.add((Expression)node);
         }
 
@@ -55,8 +80,69 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     }
 
     @Override
-    public Node visitExpression(@NotNull JavaScriptParser.ExpressionContext ctx) {
-        return super.visitExpression(ctx);
+    public Node visitMulExpression(@NotNull JavaScriptParser.MulExpressionContext ctx) {
+        String str = ctx.getChild(1).getText();
+        Operator op = sOperatorMap.get(str);
+        Preconditions.checkNotNull(op);
+        return new BinaryExpression(
+                op,
+                (Expression)visit(ctx.expression(0)),
+                (Expression)visit(ctx.expression(1)));
+    }
+
+    @Override
+    public Node visitPlusExpression(@NotNull JavaScriptParser.PlusExpressionContext ctx) {
+        String str = ctx.getChild(1).getText();
+        Operator op = sOperatorMap.get(str);
+        Preconditions.checkNotNull(op);
+        return new BinaryExpression(
+                op,
+                (Expression)visit(ctx.expression(0)),
+                (Expression)visit(ctx.expression(1)));
+    }
+
+    @Override
+    public Node visitLogicCompareExpression(@NotNull JavaScriptParser.LogicCompareExpressionContext ctx) {
+        String str = ctx.getChild(1).getText();
+        Operator op = sOperatorMap.get(str);
+        Preconditions.checkNotNull(op);
+        return new BinaryExpression(
+                op,
+                (Expression)visit(ctx.expression(0)),
+                (Expression)visit(ctx.expression(1)));
+    }
+
+    @Override
+    public Node visitLoginEqualityExpression(@NotNull JavaScriptParser.LoginEqualityExpressionContext ctx) {
+        String str = ctx.getChild(1).getText();
+        Operator op = sOperatorMap.get(str);
+        Preconditions.checkNotNull(op);
+        return new BinaryExpression(
+                op,
+                (Expression)visit(ctx.expression(0)),
+                (Expression)visit(ctx.expression(1)));
+    }
+
+    @Override
+    public Node visitLoginAndExpression(@NotNull JavaScriptParser.LoginAndExpressionContext ctx) {
+        String str = ctx.getChild(1).getText();
+        Operator op = sOperatorMap.get(str);
+        Preconditions.checkNotNull(op);
+        return new BinaryExpression(
+                op,
+                (Expression)visit(ctx.expression(0)),
+                (Expression)visit(ctx.expression(1)));
+    }
+
+    @Override
+    public Node visitLogicOrExpression(@NotNull JavaScriptParser.LogicOrExpressionContext ctx) {
+        String str = ctx.getChild(1).getText();
+        Operator op = sOperatorMap.get(str);
+        Preconditions.checkNotNull(op);
+        return new BinaryExpression(
+                op,
+                (Expression)visit(ctx.expression(0)),
+                (Expression)visit(ctx.expression(1)));
     }
 
     @Override
@@ -91,7 +177,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     @Override
     public Node visitUnaryExpression(@NotNull JavaScriptParser.UnaryExpressionContext ctx) {
         Token token = ctx.getStart();
-        Expression subExpr = (Expression) visitExpression(ctx.expression());
+        Expression subExpr = (Expression) visit(ctx.expression());
         switch (token.getType()) {
             case JavaScriptLexer.PLUS:
                 return new UnaryExpression(Operator.PLUS, subExpr);
