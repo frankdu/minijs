@@ -8,7 +8,7 @@ public class ParenthesizedExpression implements Expression {
         mExpression = expr;
     }
 
-    public Expression getExpression() {
+    public Expression getSubExpression() {
         return mExpression;
     }
 

@@ -10,6 +10,7 @@ import org.minijs.parser.antlr.JavaScriptLexer;
 import org.minijs.parser.antlr.JavaScriptParser;
 
 import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AstConstructVisitorTest {
 
@@ -144,7 +145,7 @@ public class AstConstructVisitorTest {
     @Test
     public void testParenthesizedExpression() {
         String expressions[] = {"(3)", "(index)", "(null)", "(\"hello\")"};
-        Class subExpressionClasses[] = {NumberLiteral.class, Identifier.class, NullLiteral.class, StringLiteral.class};
+        Class expectedSubExpressionClasses[] = {NumberLiteral.class, Identifier.class, NullLiteral.class, StringLiteral.class};
 
         for (int i = 0; i < expressions.length; i++) {
             initParser(expressions[i]);
@@ -152,10 +153,29 @@ public class AstConstructVisitorTest {
             Node node = visitor.visit(tree);
 
             assertTrue(node instanceof ParenthesizedExpression);
-            Expression subExpr = ((ParenthesizedExpression) node).getExpression();
+            Expression subExpr = ((ParenthesizedExpression) node).getSubExpression();
 
-            assertEquals(subExpressionClasses[i], subExpr.getClass());
+            assertEquals(expectedSubExpressionClasses[i], subExpr.getClass());
         }
+    }
 
+    @Test
+    public void testUnaryExpression() {
+        String expressions[] = {"+index", "-index", "!false", "++index", "--index"};
+        Operator expectedOperators[] = {Operator.PLUS, Operator.MINUS, Operator.NOT, Operator.INC, Operator.DEC};
+        Class expectedSubExpressionClasses[] = {
+                Identifier.class, Identifier.class, BooleanLiteral.class, Identifier.class, Identifier.class};
+
+        for (int i = 0; i < expressions.length; i++) {
+            initParser(expressions[i]);
+            ParseTree tree = parser.unaryExpression();
+            Node node = visitor.visit(tree);
+
+            assertTrue(node instanceof UnaryExpression);
+            UnaryExpression unaryExpression = (UnaryExpression) node;
+
+            assertEquals(expectedOperators[i], unaryExpression.getOperator());
+            assertEquals(expectedSubExpressionClasses[i], unaryExpression.getSubExpression().getClass());
+        }
     }
 }

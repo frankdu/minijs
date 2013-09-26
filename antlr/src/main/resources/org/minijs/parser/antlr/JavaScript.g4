@@ -53,14 +53,17 @@ parenthesizedExpression
 
 expression
     :   primaryExpression
-    |   ('+' | '-' | INC | DEC) expression        
-    |   NOT expression
+    |   unaryExpression
     |   expression '.' IDENTIFIER
-    |   expression BINARY_OPEATOR expression
+    |   expression binaryOperator expression
     |   expression '[' expression ']'
     |   expression '(' expressionList? ')'
     |   expression (INC | DEC)
     |   expression '?' expression ':' expression
+    ;
+
+unaryExpression
+    :   ('+' | '-' | '!' | INC | DEC) expression
     ;
 
 expressionList
@@ -112,9 +115,9 @@ NUMBER
     :   SIGN? INT+ ('.' INT+)? EXPONENT?
     ;
 
-BINARY_OPEATOR
-    :   ADD
-    |   SUB
+binaryOperator
+    :   '+'
+    |   '-'
     |   MUL
     |   DIV
     |   MOD
@@ -153,8 +156,8 @@ QUESTION        : '?';
 COLON           : ':';
 
 // Operators
-ADD:        '+';
-SUB:        '-';
+PLUS:       '+';
+MINUS:      '-';
 MUL:        '*';
 DIV:        '/';
 MOD:        '%';

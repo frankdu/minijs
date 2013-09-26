@@ -87,4 +87,28 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
         Node exprNode = visit(ctx.expression());
         return new ParenthesizedExpression((Expression)exprNode);
     }
+
+    @Override
+    public Node visitUnaryExpression(@NotNull JavaScriptParser.UnaryExpressionContext ctx) {
+        Token token = ctx.getStart();
+        Expression subExpr = (Expression) visitExpression(ctx.expression());
+        switch (token.getType()) {
+            case JavaScriptLexer.PLUS:
+                return new UnaryExpression(Operator.PLUS, subExpr);
+
+            case JavaScriptLexer.MINUS:
+                return new UnaryExpression(Operator.MINUS, subExpr);
+
+            case JavaScriptLexer.NOT:
+                return new UnaryExpression(Operator.NOT, subExpr);
+
+            case JavaScriptLexer.INC:
+                return new UnaryExpression(Operator.INC, subExpr);
+
+            case JavaScriptLexer.DEC:
+                return new UnaryExpression(Operator.DEC, subExpr);
+
+        }
+        return super.visitUnaryExpression(ctx);
+    }
 }
