@@ -54,13 +54,15 @@ parenthesizedExpression
 expression
     :   expression '.' IDENTIFIER                               #propertyExpression
     |   expression '[' expression ']'                           #indexorExpression
-    |   expression '(' expressionList? ')'                      #invocationExpression
+    |   'new' IDENTIFIER '(' expressionList? ')'                #newExpression
+    |   expression '(' expressionList? ')'                      #functionCallExpression
     |   primaryExpression                                       #primaryExpression2
-    |   expression (INC | DEC)                                  #postExpression
+    |   expression (INC | DEC)                                  #postIncDecExpression
     |   unaryExpression                                         #unaryExpression2
     |   expression ('*' | '/' | '%') expression                 #mulExpression
     |   expression ('+' | '-') expression                       #plusExpression
-    |   expression ('<' | '<=' | '>' | '>=') expression         #logicCompareExpression
+    |   expression ('<' | '<=' | '>' | '>=' |
+                    'in' | 'instanceof') expression             #relationalExpression
     |   expression ('==' | '!=' | '===' | '!==') expression     #loginEqualityExpression
     |   expression '&&' expression                              #loginAndExpression
     |   expression '||' expression                              #logicOrExpression
@@ -68,7 +70,7 @@ expression
     ;
 
 unaryExpression
-    :   (INC | DEC | '!' | '+' | '-') expression
+    :   (INC | DEC | '!' | '~' | '+' | '-' | 'delete') expression
     ;
 
 expressionList
@@ -130,6 +132,10 @@ CONTINUE:   'continue';
 BREAK:      'break';
 RETURN:     'return';
 FUNCTION:   'function';
+NEW:        'new';
+DELETE:     'delete';
+IN:         'in';
+INSTANCEOF: 'instanceof';
 
 // Separators
 LPAREN          : '(';
@@ -164,6 +170,7 @@ INC:        '++';
 DEC:        '--';
 EXACT_EQ:   '===';
 EXACT_NEQ:  '!==';
+BITWISE_NOT: '~';
 
 
 fragment

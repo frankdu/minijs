@@ -29,6 +29,8 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 put("<=", Operator.LE);
                 put(">", Operator.GT);
                 put(">=", Operator.GE);
+                put("in", Operator.IN);
+                put("instanceof", Operator.INSTANCEOF);
                 put("==", Operator.EQ);
                 put("!=", Operator.NEQ);
                 put("===", Operator.EXACT_EQ);
@@ -102,7 +104,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     }
 
     @Override
-    public Node visitLogicCompareExpression(@NotNull JavaScriptParser.LogicCompareExpressionContext ctx) {
+    public Node visitRelationalExpression(@NotNull JavaScriptParser.RelationalExpressionContext ctx) {
         String str = ctx.getChild(1).getText();
         Operator op = sOperatorMap.get(str);
         Preconditions.checkNotNull(op);

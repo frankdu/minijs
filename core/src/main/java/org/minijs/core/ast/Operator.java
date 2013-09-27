@@ -18,7 +18,9 @@ public enum Operator {
     EXACT_EQ("==="),
     EXACT_NEQ("!=="),
     AND("&&"),
-    OR("||");
+    OR("||"),
+    IN("in"),
+    INSTANCEOF("instanceof");
 
     private final String mOpString;
 
