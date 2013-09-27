@@ -197,4 +197,13 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
         }
         return super.visitUnaryExpression(ctx);
     }
+
+    @Override
+    public Node visitConditionalExpression(@NotNull JavaScriptParser.ConditionalExpressionContext ctx) {
+        return new ConditionalExpression(
+                (Expression) visit(ctx.expression(0)),
+                (Expression) visit(ctx.expression(1)),
+                (Expression) visit(ctx.expression(2))
+        );
+    }
 }
