@@ -12,6 +12,18 @@ public class BinaryExpression implements Expression {
         mRightExpression = right;
     }
 
+    public Operator getOperator() {
+        return mOperator;
+    }
+
+    public Expression getLeftExpression() {
+        return mLeftExpression;
+    }
+
+    public Expression getRightExpression() {
+        return mRightExpression;
+    }
+
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder(mLeftExpression.toString());

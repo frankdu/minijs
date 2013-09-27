@@ -35,7 +35,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 put("!==", Operator.EXACT_NEQ);
 
                 put("&&", Operator.AND);
-                put("!!", Operator.OR);
+                put("||", Operator.OR);
             }}
     );
 

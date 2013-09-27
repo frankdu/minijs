@@ -1,32 +1,12 @@
 package org.minijs.core.parser;
 
-import org.antlr.v4.runtime.ANTLRInputStream;
-import org.antlr.v4.runtime.CommonTokenStream;
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.junit.Before;
 import org.junit.Test;
 import org.minijs.core.ast.*;
-import org.minijs.parser.antlr.JavaScriptLexer;
-import org.minijs.parser.antlr.JavaScriptParser;
 
 import static org.junit.Assert.*;
-import static org.junit.Assert.assertEquals;
 
-public class AstConstructVisitorTest {
-
-    private JavaScriptParser parser;
-    private AstConstructVisitor visitor;
-
-    @Before
-    public void setup() {
-        parser = new JavaScriptParser(null);
-        visitor = new AstConstructVisitor();
-    }
-
-    private void initParser(String s) {
-        JavaScriptLexer lexer = new JavaScriptLexer(new ANTLRInputStream(s));
-        parser.setTokenStream(new CommonTokenStream(lexer));
-    }
+public class AstConstructVisitorTest extends BaseParserTest {
 
     @Test
     public void testNumberLiteral() {

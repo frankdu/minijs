@@ -61,7 +61,7 @@ expression
     |   expression ('*' | '/' | '%') expression                 #mulExpression
     |   expression ('+' | '-') expression                       #plusExpression
     |   expression ('<' | '<=' | '>' | '>=') expression         #logicCompareExpression
-    |   expression ('==' | '!=' | '====' | '!===') expression   #loginEqualityExpression
+    |   expression ('==' | '!=' | '===' | '!==') expression     #loginEqualityExpression
     |   expression '&&' expression                              #loginAndExpression
     |   expression '||' expression                              #logicOrExpression
     |   expression '?' expression ':' expression                #conditionalExpression
