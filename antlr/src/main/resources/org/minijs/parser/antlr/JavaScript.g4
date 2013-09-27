@@ -57,7 +57,7 @@ expression
     |   'new' IDENTIFIER '(' expressionList? ')'                #newExpression
     |   expression '(' expressionList? ')'                      #functionCallExpression
     |   primaryExpression                                       #primaryExpression2
-    |   expression (INC | DEC)                                  #postIncDecExpression
+    |   expression (INC | DEC)                                  #postUpdateExpression
     |   unaryExpression                                         #unaryExpression2
     |   expression ('*' | '/' | '%') expression                 #mulExpression
     |   expression ('+' | '-') expression                       #plusExpression
