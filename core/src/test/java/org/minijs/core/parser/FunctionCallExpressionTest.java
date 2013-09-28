@@ -16,19 +16,18 @@ public class FunctionCallExpressionTest extends BaseParserTest {
                 "foo()",
                 "foo(a)",
                 "foo(a, b, 3)",
-                // TODO: disabled for now. Shall check operator precedence and fix
-                /*"foo[0]()",
+                "foo[0]()",
                 "foo[0](a)",
-                "foo[0](a, b, 3)",*/
+                "foo[0](a, b, 3)",
         };
 
         Class[] expectedFunctionObjectClasses = {
                 Identifier.class,
                 Identifier.class,
                 Identifier.class,
-                ArrayLiteral.class,
-                ArrayLiteral.class,
-                ArrayLiteral.class,
+                IndexorExpression.class,
+                IndexorExpression.class,
+                IndexorExpression.class,
         };
 
         int[] expectedArgumentCounts = {

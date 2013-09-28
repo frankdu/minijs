@@ -246,4 +246,32 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
         }
         return new FunctionCallExpression(functionObject, parameters);
     }
+
+    @Override
+    public Node visitPropertyExpression(@NotNull JavaScriptParser.PropertyExpressionContext ctx) {
+        Expression targetExpression = (Expression) visit(ctx.expression());
+        String propertyName = ctx.IDENTIFIER().getText();
+        return new PropertyExpression(targetExpression, propertyName);
+    }
+
+    @Override
+    public Node visitIndexorExpression(@NotNull JavaScriptParser.IndexorExpressionContext ctx) {
+        Expression targetExpression = (Expression) visit(ctx.expression(0));
+        Expression indexExpression = (Expression) visit(ctx.expression(1));
+        return new IndexorExpression(targetExpression, indexExpression);
+    }
+
+    @Override
+    public Node visitNewExpression(@NotNull JavaScriptParser.NewExpressionContext ctx) {
+        String className = ctx.IDENTIFIER().getText();
+        JavaScriptParser.ExpressionListContext expressionListContext = ctx.expressionList();
+        ExpressionList parameters;
+        if (expressionListContext == null) {
+            parameters = EMPTY_EXPRESSION_LIST;
+        } else {
+            parameters = (ExpressionList) visit(expressionListContext);
+        }
+
+        return new NewExpression(className, parameters);
+    }
 }
