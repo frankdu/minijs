@@ -8,18 +8,18 @@ import org.minijs.parser.antlr.JavaScriptParser;
 
 public class BaseParserTest {
 
-    protected JavaScriptParser parser;
-    protected AstConstructVisitor visitor;
+    protected JavaScriptParser mParser;
+    protected AstConstructVisitor mVisitor;
 
     @Before
     public void setup() {
-        parser = new JavaScriptParser(null);
-        visitor = new AstConstructVisitor();
+        mParser = new JavaScriptParser(null);
+        mVisitor = new AstConstructVisitor();
     }
 
     protected void initParser(String s) {
         JavaScriptLexer lexer = new JavaScriptLexer(new ANTLRInputStream(s));
-        parser.setTokenStream(new CommonTokenStream(lexer));
+        mParser.setTokenStream(new CommonTokenStream(lexer));
     }
 
 }

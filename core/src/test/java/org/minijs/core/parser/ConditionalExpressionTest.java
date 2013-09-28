@@ -35,8 +35,8 @@ public class ConditionalExpressionTest extends BaseParserTest {
 
         for (int i = 0; i < expressions.length; i++) {
             initParser(expressions[i]);
-            ParseTree tree = parser.expressionList();
-            Node node = visitor.visit(tree);
+            ParseTree tree = mParser.expressionList();
+            Node node = mVisitor.visit(tree);
 
             assertTrue(node instanceof ExpressionList);
             ExpressionList expressionList = (ExpressionList) node;

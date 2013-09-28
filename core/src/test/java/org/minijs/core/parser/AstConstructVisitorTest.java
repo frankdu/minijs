@@ -14,8 +14,8 @@ public class AstConstructVisitorTest extends BaseParserTest {
 
         for (int n : numbers) {
             initParser(String.valueOf(n));
-            ParseTree tree = parser.literal();
-            Node node = visitor.visit(tree);
+            ParseTree tree = mParser.literal();
+            Node node = mVisitor.visit(tree);
 
             assertTrue(node instanceof NumberLiteral);
             NumberLiteral literal = (NumberLiteral) node;
@@ -32,8 +32,8 @@ public class AstConstructVisitorTest extends BaseParserTest {
             String v = values[i];
 
             initParser(v);
-            ParseTree tree = parser.literal();
-            Node node = visitor.visit(tree);
+            ParseTree tree = mParser.literal();
+            Node node = mVisitor.visit(tree);
 
             assertTrue(node instanceof BooleanLiteral);
             BooleanLiteral literal = (BooleanLiteral) node;
@@ -46,8 +46,8 @@ public class AstConstructVisitorTest extends BaseParserTest {
         String input = "null";
 
         initParser(input);
-        ParseTree tree = parser.literal();
-        Node node = visitor.visit(tree);
+        ParseTree tree = mParser.literal();
+        Node node = mVisitor.visit(tree);
 
         assertTrue(node instanceof NullLiteral);
     }
@@ -57,8 +57,8 @@ public class AstConstructVisitorTest extends BaseParserTest {
         String input = "undefined";
 
         initParser(input);
-        ParseTree tree = parser.literal();
-        Node node = visitor.visit(tree);
+        ParseTree tree = mParser.literal();
+        Node node = mVisitor.visit(tree);
 
         assertTrue(node instanceof UndefinedLiteral);
     }
@@ -76,8 +76,8 @@ public class AstConstructVisitorTest extends BaseParserTest {
 
         for (String s : strs) {
             initParser("\"" + s + "\"");
-            ParseTree tree = parser.literal();
-            Node node = visitor.visit(tree);
+            ParseTree tree = mParser.literal();
+            Node node = mVisitor.visit(tree);
 
             assertTrue(node instanceof StringLiteral);
             StringLiteral literal = (StringLiteral) node;
@@ -94,8 +94,8 @@ public class AstConstructVisitorTest extends BaseParserTest {
 
         for (String id : ids) {
             initParser(id);
-            ParseTree tree = parser.primaryExpression();
-            Node node = visitor.visit(tree);
+            ParseTree tree = mParser.primaryExpression();
+            Node node = mVisitor.visit(tree);
 
             assertTrue(node instanceof Identifier);
             Identifier identifier = (Identifier) node;
@@ -112,8 +112,8 @@ public class AstConstructVisitorTest extends BaseParserTest {
         for (int i = 0; i < literals.length; i++) {
             String s = literals[i];
             initParser(s);
-            ParseTree tree = parser.arrayLiteral();
-            Node node = visitor.visit(tree);
+            ParseTree tree = mParser.arrayLiteral();
+            Node node = mVisitor.visit(tree);
 
             assertTrue(node instanceof ArrayLiteral);
             ArrayLiteral arrayLiteral = (ArrayLiteral) node;
@@ -129,8 +129,8 @@ public class AstConstructVisitorTest extends BaseParserTest {
 
         for (int i = 0; i < expressions.length; i++) {
             initParser(expressions[i]);
-            ParseTree tree = parser.parenthesizedExpression();
-            Node node = visitor.visit(tree);
+            ParseTree tree = mParser.parenthesizedExpression();
+            Node node = mVisitor.visit(tree);
 
             assertTrue(node instanceof ParenthesizedExpression);
             Expression subExpr = ((ParenthesizedExpression) node).getSubExpression();
@@ -148,8 +148,8 @@ public class AstConstructVisitorTest extends BaseParserTest {
 
         for (int i = 0; i < expressions.length; i++) {
             initParser(expressions[i]);
-            ParseTree tree = parser.unaryExpression();
-            Node node = visitor.visit(tree);
+            ParseTree tree = mParser.unaryExpression();
+            Node node = mVisitor.visit(tree);
 
             assertTrue(node instanceof UnaryExpression);
             UnaryExpression unaryExpression = (UnaryExpression) node;
