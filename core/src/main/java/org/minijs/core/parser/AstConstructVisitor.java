@@ -15,8 +15,10 @@ import java.util.List;
 import java.util.Map;
 
 public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
+
     private static final NullLiteral NULL_LITERAL = new NullLiteral();
     private static final UndefinedLiteral UNDEFINED_LITERAL = new UndefinedLiteral();
+    private static final ExpressionList EMPTY_EXPRESSION_LIST = new ExpressionList(new ArrayList<Expression>());
     private static final Map<String, Operator> sOperatorMap = Collections.unmodifiableMap(
             new HashMap<String, Operator>() {{
                 put("*", Operator.MUL);
@@ -230,5 +232,18 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 operator,
                 (Expression) visit(ctx.expression())
         );
+    }
+
+    @Override
+    public Node visitFunctionCallExpression(@NotNull JavaScriptParser.FunctionCallExpressionContext ctx) {
+        Expression functionObject = (Expression) visit(ctx.expression());
+
+        ExpressionList parameters;
+        if (ctx.getChildCount() == 3) {
+            parameters = EMPTY_EXPRESSION_LIST;
+        } else {
+            parameters = (ExpressionList) visit(ctx.expressionList());
+        }
+        return new FunctionCallExpression(functionObject, parameters);
     }
 }
