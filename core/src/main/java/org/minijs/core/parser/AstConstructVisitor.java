@@ -38,6 +38,9 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
                 put("&&", Operator.AND);
                 put("||", Operator.OR);
+
+                put("++", Operator.INC);
+                put("--", Operator.DEC);
             }}
     );
 
@@ -191,13 +194,22 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 return new UnaryExpression(Operator.NOT, subExpr);
 
             case JavaScriptLexer.INC:
-                return new UnaryExpression(Operator.INC, subExpr);
+                return new IncDecUpdateExpression(
+                        IncDecUpdateExpression.UpdateTiming.PRE,
+                        Operator.INC,
+                        subExpr
+                );
 
             case JavaScriptLexer.DEC:
-                return new UnaryExpression(Operator.DEC, subExpr);
+                return new IncDecUpdateExpression(
+                        IncDecUpdateExpression.UpdateTiming.PRE,
+                        Operator.DEC,
+                        subExpr
+                );
 
+            default:
+                return super.visitUnaryExpression(ctx);
         }
-        return super.visitUnaryExpression(ctx);
     }
 
     @Override
@@ -206,6 +218,17 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 (Expression) visit(ctx.expression(0)),
                 (Expression) visit(ctx.expression(1)),
                 (Expression) visit(ctx.expression(2))
+        );
+    }
+
+    @Override
+    public Node visitPostUpdateExpression(@NotNull JavaScriptParser.PostUpdateExpressionContext ctx) {
+        String opStr = ctx.getChild(1).getText();
+        Operator operator = sOperatorMap.get(opStr);
+        return new IncDecUpdateExpression(
+                IncDecUpdateExpression.UpdateTiming.POST,
+                operator,
+                (Expression) visit(ctx.expression())
         );
     }
 }
