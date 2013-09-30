@@ -8,7 +8,7 @@ program
     ;
 
 variableDeclarators
-    :   'var'? variableDeclarator (COMMA variableDeclarator)*
+    :   'var'? variableDeclarator (',' variableDeclarator)*
     ;
 
 
@@ -22,17 +22,18 @@ variableInitializer
 
 
 statement
-    :   SEMI
-    |   'break'
-    |   'continue'
-    |   expression
-    |   variableDeclarators
-    |   '{' statement* '}'
+    :   'break' ';'?                                    #breakStatement
+    |   'continue' ';'?                                 #continueStatement
+    |   'return' expression ';'?                        #returnStatement
+    |   variableDeclarators ';'?                        #variableDeclareStatement
+    |   '{' statement* '}'                              #blockStatement
     |   'if' parenthesizedExpression statement
-        'for' '(' forControl ')' statement
-    |   'while' parenthesizedExpression statement
-    |   'do' statement 'while' parenthesizedExpression
-    |   'return' expression
+        ('else' statement)?                             #ifStatement
+    |   'for' '(' forControl ')' statement              #forStatement
+    |   'while' parenthesizedExpression statement       #whileStatement
+    |   'do' statement 'while' parenthesizedExpression  #doWhileStatement
+    |   expression ';'?                                 #expressionStatement
+    |   ';'                                             #noopStatement
     ;
 
 forControl
