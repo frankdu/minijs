@@ -27,11 +27,11 @@ statement
     |   'return' expression ';'?                        #returnStatement
     |   variableDeclarators ';'?                        #variableDeclareStatement
     |   '{' statement* '}'                              #blockStatement
-    |   'if' parenthesizedExpression statement
+    |   'if' '(' expression ')' statement
         ('else' statement)?                             #ifStatement
     |   'for' '(' forControl ')' statement              #forStatement
-    |   'while' parenthesizedExpression statement       #whileStatement
-    |   'do' statement 'while' parenthesizedExpression  #doWhileStatement
+    |   'while' '(' expression ')' statement            #whileStatement
+    |   'do' statement 'while' '(' expression ')' ';'?  #doWhileStatement
     |   expression ';'?                                 #expressionStatement
     |   ';'                                             #noopStatement
     ;

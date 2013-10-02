@@ -16,6 +16,11 @@ import java.util.Map;
 
 public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
+    private static final NoopStatement NOOP_STATEMENT = new NoopStatement();
+    private static final BreakStatement BREAK_STATEMENT = new BreakStatement();
+    private static final ContinueStatement CONTINUE_STATEMENT = new ContinueStatement();
+    private static final ReturnStatement RETURN_VOID_STATEMENT = new ReturnStatement(null);
+
     private static final NullLiteral NULL_LITERAL = new NullLiteral();
     private static final UndefinedLiteral UNDEFINED_LITERAL = new UndefinedLiteral();
     private static final ExpressionList EMPTY_EXPRESSION_LIST = new ExpressionList(new ArrayList<Expression>());
@@ -273,5 +278,62 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
         }
 
         return new NewExpression(className, parameters);
+    }
+
+    @Override
+    public Node visitBreakStatement(@NotNull JavaScriptParser.BreakStatementContext ctx) {
+        return BREAK_STATEMENT;
+    }
+
+    @Override
+    public Node visitContinueStatement(@NotNull JavaScriptParser.ContinueStatementContext ctx) {
+        return CONTINUE_STATEMENT;
+    }
+
+    @Override
+    public Node visitNoopStatement(@NotNull JavaScriptParser.NoopStatementContext ctx) {
+        return NOOP_STATEMENT;
+    }
+
+    @Override
+    public Node visitReturnStatement(@NotNull JavaScriptParser.ReturnStatementContext ctx) {
+        int count = ctx.getChildCount();
+        if (ctx.getStop().getType() == JavaScriptLexer.SEMI) {
+            count -= 1;
+        }
+        if (count < 2) {
+            return RETURN_VOID_STATEMENT;
+        } else {
+            return new ReturnStatement((Expression) visit(ctx.expression()));
+        }
+    }
+
+    @Override
+    public Node visitBlockStatement(@NotNull JavaScriptParser.BlockStatementContext ctx) {
+        List<Statement> subStatementList = new ArrayList<Statement>();
+
+        int statementCount = ctx.getChildCount() - 2;
+        for (int i = 0; i < statementCount; i++) {
+            Statement subStatement = (Statement) visit(ctx.statement(1 + i));
+            subStatementList.add(subStatement);
+        }
+
+        return new BlockStatement(subStatementList);
+    }
+
+    @Override
+    public Node visitProgram(@NotNull JavaScriptParser.ProgramContext ctx) {
+        List<Statement> subStatementList = new ArrayList<Statement>();
+        int statementCount = ctx.getChildCount();
+        for (int i = 0; i < statementCount; i++) {
+            subStatementList.add((Statement) visit(ctx.statement(i)));
+        }
+        return new BlockStatement(subStatementList);
+    }
+
+    @Override
+    public Node visitExpressionStatement(@NotNull JavaScriptParser.ExpressionStatementContext ctx) {
+        Expression expr = (Expression) visit(ctx.expression());
+        return new ExpressionStatement(expr);
     }
 }
