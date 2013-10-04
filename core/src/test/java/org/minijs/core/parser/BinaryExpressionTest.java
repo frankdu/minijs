@@ -26,6 +26,8 @@ public class BinaryExpressionTest extends BaseParserTest {
                 "a !== b",
                 "a && b",
                 "a || b",
+                "a + b",
+                "a - b",
         };
 
         Operator[] expectedOperators = {
@@ -42,6 +44,8 @@ public class BinaryExpressionTest extends BaseParserTest {
                 Operator.EXACT_NEQ,
                 Operator.AND,
                 Operator.OR,
+                Operator.PLUS,
+                Operator.MINUS,
         };
 
         for (int i = 0; i < expressions.length; i++) {
