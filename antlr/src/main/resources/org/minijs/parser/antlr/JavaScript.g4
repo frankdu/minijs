@@ -7,20 +7,6 @@ program
     :   statement+
     ;
 
-variableDeclarators
-    :   'var'? variableDeclarator (',' variableDeclarator)*
-    ;
-
-
-variableDeclarator
-    :   IDENTIFIER ('=' variableInitializer)?
-    ;
-
-variableInitializer
-    :   expression
-    ;
-
-
 statement
     :   'break' ';'?                                    #breakStatement
     |   'continue' ';'?                                 #continueStatement
@@ -34,6 +20,19 @@ statement
     |   'do' statement 'while' '(' expression ')' ';'?  #doWhileStatement
     |   expression ';'?                                 #expressionStatement
     |   ';'                                             #noopStatement
+    ;
+
+variableDeclarators
+    :   'var' variableDeclarator (',' variableDeclarator)*
+    ;
+
+
+variableDeclarator
+    :   IDENTIFIER ('=' variableInitializer)?
+    ;
+
+variableInitializer
+    :   expression
     ;
 
 forControl
