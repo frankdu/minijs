@@ -17,4 +17,16 @@ public class IfStatement implements Statement {
         mThenStatement = thenStatement;
         mElseStatement = elseStatement;
     }
+
+    public Expression getConditionExpression() {
+        return mConditionExpression;
+    }
+
+    public Statement getThenStatement () {
+        return mThenStatement;
+    }
+
+    public Statement getElseStatement() {
+        return mElseStatement;
+    }
 }

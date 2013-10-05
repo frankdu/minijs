@@ -322,7 +322,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
         int statementCount = ctx.getChildCount() - 2;
         for (int i = 0; i < statementCount; i++) {
-            Statement subStatement = (Statement) visit(ctx.statement(1 + i));
+            Statement subStatement = (Statement) visit(ctx.statement(i));
             subStatementList.add(subStatement);
         }
 
@@ -343,5 +343,18 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     public Node visitExpressionStatement(@NotNull JavaScriptParser.ExpressionStatementContext ctx) {
         Expression expr = (Expression) visit(ctx.expression());
         return new ExpressionStatement(expr);
+    }
+
+    @Override
+    public Node visitIfStatement(@NotNull JavaScriptParser.IfStatementContext ctx) {
+        Expression conditionExpression = (Expression) visit(ctx.expression());
+
+        Statement thenStatement = (Statement) visit(ctx.statement(0));
+        Statement elseStatement = null;
+        if (ctx.getChildCount() == 7) {
+            elseStatement = (Statement) visit(ctx.statement(1));
+        }
+
+        return new IfStatement(conditionExpression, thenStatement, elseStatement);
     }
 }
