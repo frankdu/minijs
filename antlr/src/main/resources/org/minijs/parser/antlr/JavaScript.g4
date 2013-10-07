@@ -114,14 +114,6 @@ NULL_LITERAL
     :   'null'
     ;
 
-IDENTIFIER
-    :   [a-zA-Z$_] [a-zA-Z0-9$_]*
-    ;
-
-NUMBER
-    :   SIGN? INT+ ('.' INT+)? EXPONENT?
-    ;
-
 // Keywords
 VAR:        'var';
 IF:         'if';
@@ -136,6 +128,14 @@ NEW:        'new';
 DELETE:     'delete';
 IN:         'in';
 INSTANCEOF: 'instanceof';
+
+IDENTIFIER
+    :   [a-zA-Z$_] [a-zA-Z0-9$_]*
+    ;
+
+NUMBER
+    :   SIGN? INT+ ('.' INT+)? EXPONENT?
+    ;
 
 // Separators
 LPAREN          : '(';

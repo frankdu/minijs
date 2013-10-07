@@ -16,7 +16,6 @@ import static org.junit.Assert.assertTrue;
 public class BreakStatementTest extends BaseParserTest {
 
     @Test
-    @Ignore
     public void testBreakStatement() {
         String[] statements = {
                 "break",

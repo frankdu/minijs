@@ -16,7 +16,6 @@ import static org.junit.Assert.assertEquals;
 public class ExpressionStatementTest extends BaseParserTest {
 
     @Test
-    @Ignore
     public void testExpressionStatement() {
         String[] statements = {
                 "1 + 1;",
