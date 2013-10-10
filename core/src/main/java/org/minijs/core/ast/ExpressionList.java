@@ -1,5 +1,7 @@
 package org.minijs.core.ast;
 
+import edu.emory.mathcs.backport.java.util.Collections;
+
 import java.util.List;
 
 public class ExpressionList implements Node {
@@ -7,7 +9,7 @@ public class ExpressionList implements Node {
     private final List<Expression> mExpressionList;
 
     public ExpressionList(List<Expression> list) {
-        mExpressionList = list;
+        mExpressionList = Collections.unmodifiableList(list);
     }
 
     public Expression get(int index) {
