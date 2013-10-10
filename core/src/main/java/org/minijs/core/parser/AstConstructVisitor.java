@@ -281,6 +281,14 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     }
 
     @Override
+    public Node visitAssignmentExpression(@NotNull JavaScriptParser.AssignmentExpressionContext ctx) {
+        return new AssignmentExpression(
+                (Expression) visit(ctx.expression(0)),
+                (Expression) visit(ctx.expression(1))
+        );
+    }
+
+    @Override
     public Node visitBreakStatement(@NotNull JavaScriptParser.BreakStatementContext ctx) {
         return BREAK_STATEMENT;
     }

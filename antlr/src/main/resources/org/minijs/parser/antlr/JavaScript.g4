@@ -67,6 +67,16 @@ expression
     |   expression '&&' expression                              #loginAndExpression
     |   expression '||' expression                              #logicOrExpression
     |   expression '?' expression ':' expression                #conditionalExpression
+    |   expression
+            (   '='<assoc=right>
+            |   '+='<assoc=right>
+            |   '-='<assoc=right>
+            |   '*='<assoc=right>
+            |   '/='<assoc=right>
+            |   '&='<assoc=right>
+            |   '|='<assoc=right>
+            |   '%='<assoc=right>
+            ) expression                                        #assignmentExpression
     ;
 
 unaryExpression
