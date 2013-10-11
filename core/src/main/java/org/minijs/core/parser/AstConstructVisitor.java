@@ -353,4 +353,12 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
         return new IfStatement(conditionExpression, thenStatement, elseStatement);
     }
+
+    @Override
+    public Node visitDoWhileStatement(@NotNull JavaScriptParser.DoWhileStatementContext ctx) {
+        return new DoWhileStatement(
+                (Expression) visit(ctx.expression()),
+                (Statement) visit(ctx.statement())
+        );
+    }
 }

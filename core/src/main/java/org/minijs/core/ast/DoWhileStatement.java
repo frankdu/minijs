@@ -1,6 +1,6 @@
 package org.minijs.core.ast;
 
-public class DoWhileStatement {
+public class DoWhileStatement implements Statement {
 
     private final Expression mConditionExpression;
 
@@ -9,5 +9,13 @@ public class DoWhileStatement {
     public DoWhileStatement(Expression conditionExpression, Statement subStatement) {
         mConditionExpression = conditionExpression;
         mSubStatement = subStatement;
+    }
+
+    public Expression getConditionExpression() {
+        return mConditionExpression;
+    }
+
+    public Statement getSubStatement() {
+        return mSubStatement;
     }
 }
