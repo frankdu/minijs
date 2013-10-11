@@ -1,6 +1,5 @@
 package org.minijs.core.parser;
 
-import edu.emory.mathcs.backport.java.util.Collections;
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.NotNull;
 import org.minijs.core.ast.*;
@@ -9,10 +8,7 @@ import org.minijs.parser.antlr.JavaScriptBaseVisitor;
 import org.minijs.parser.antlr.JavaScriptLexer;
 import org.minijs.parser.antlr.JavaScriptParser;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 

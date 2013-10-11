@@ -1,7 +1,6 @@
 package org.minijs.core.ast;
 
-import edu.emory.mathcs.backport.java.util.Collections;
-
+import java.util.Collections;
 import java.util.List;
 
 public class ExpressionList implements Node {
