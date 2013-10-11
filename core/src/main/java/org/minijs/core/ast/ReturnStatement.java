@@ -7,4 +7,8 @@ public class ReturnStatement implements Statement {
     public ReturnStatement(Expression expression) {
         mExpression = expression;
     }
+
+    public Expression getExpression() {
+        return mExpression;
+    }
 }

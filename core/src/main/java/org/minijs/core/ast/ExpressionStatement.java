@@ -7,4 +7,8 @@ public class ExpressionStatement implements Statement {
     public ExpressionStatement(Expression expression) {
         mExpression = expression;
     }
+
+    public Expression getExpression() {
+        return mExpression;
+    }
 }

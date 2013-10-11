@@ -1,6 +1,7 @@
 package org.minijs.core.ast;
 
 public class ConditionalExpression implements Expression {
+
     private final Expression mConditionExpression;
     private final Expression mTrueExpression;
     private final Expression mFalseExpression;

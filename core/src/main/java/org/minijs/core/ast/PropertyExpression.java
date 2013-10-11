@@ -9,4 +9,12 @@ public class PropertyExpression implements Expression {
         mTargetExpression = targetExpression;
         mPropertyName = propertyName;
     }
+
+    public Expression getTargetExpression() {
+        return mTargetExpression;
+    }
+
+    public String getPropertyName() {
+        return mPropertyName;
+    }
 }

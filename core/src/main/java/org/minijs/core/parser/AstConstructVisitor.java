@@ -2,6 +2,7 @@ package org.minijs.core.parser;
 
 import org.antlr.v4.runtime.Token;
 import org.antlr.v4.runtime.misc.NotNull;
+import org.antlr.v4.runtime.tree.TerminalNode;
 import org.minijs.core.ast.*;
 import org.minijs.core.util.Preconditions;
 import org.minijs.parser.antlr.JavaScriptBaseVisitor;
@@ -178,8 +179,9 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
     @Override
     public Node visitParenthesizedExpression(@NotNull JavaScriptParser.ParenthesizedExpressionContext ctx) {
-        Node exprNode = visit(ctx.expression());
-        return new ParenthesizedExpression((Expression)exprNode);
+        return new ParenthesizedExpression(
+                (Expression) visit(ctx.expression())
+        );
     }
 
     @Override
@@ -286,11 +288,21 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
     @Override
     public Node visitBreakStatement(@NotNull JavaScriptParser.BreakStatementContext ctx) {
+        TerminalNode terminalNode = ctx.IDENTIFIER();
+        if (terminalNode != null) {
+            return new BreakStatement(terminalNode.getText());
+        }
+
         return BREAK_STATEMENT;
     }
 
     @Override
     public Node visitContinueStatement(@NotNull JavaScriptParser.ContinueStatementContext ctx) {
+        TerminalNode terminalNode = ctx.IDENTIFIER();
+        if (terminalNode != null) {
+            return new ContinueStatement(terminalNode.getText());
+        }
+
         return CONTINUE_STATEMENT;
     }
 
@@ -360,5 +372,78 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 (Expression) visit(ctx.expression()),
                 (Statement) visit(ctx.statement())
         );
+    }
+
+    @Override
+    public Node visitWhileStatement(@NotNull JavaScriptParser.WhileStatementContext ctx) {
+        return new WhileStatement(
+                (Expression) visit(ctx.expression()),
+                (Statement) visit(ctx.statement())
+        );
+    }
+
+    @Override
+    public Node visitVariableDeclareStatement(@NotNull JavaScriptParser.VariableDeclareStatementContext ctx) {
+        return new VariableDeclaratorsStatement((VariableDeclarators) visit(ctx.variableDeclarators()));
+    }
+
+    @Override
+    public Node visitForStatement(@NotNull JavaScriptParser.ForStatementContext ctx) {
+        return new ForStatement(
+                (ForControl) visit(ctx.forControl()),
+                (Statement) visit(ctx.statement())
+        );
+    }
+
+    @Override
+    public Node visitForControl(@NotNull JavaScriptParser.ForControlContext ctx) {
+        VariableDeclarators variableDeclarators = null;
+        Expression conditionExpression = null;
+        ExpressionList updateExpressionList = null;
+
+        JavaScriptParser.VariableDeclaratorsContext varDeclaratorsContext = ctx.variableDeclarators();
+        if (varDeclaratorsContext!= null) {
+            variableDeclarators = (VariableDeclarators) visit(varDeclaratorsContext);
+        }
+
+        JavaScriptParser.ExpressionContext expressionContext = ctx.expression();
+        if (expressionContext != null) {
+            conditionExpression = (Expression) visit(expressionContext);
+        }
+
+        JavaScriptParser.ExpressionListContext expressionListContext = ctx.expressionList();
+        if (expressionListContext != null) {
+            updateExpressionList = (ExpressionList) visit(expressionListContext);
+        }
+
+        return new ForControl(
+                variableDeclarators,
+                conditionExpression,
+                updateExpressionList
+        );
+    }
+
+    @Override
+    public Node visitVariableDeclarator(@NotNull JavaScriptParser.VariableDeclaratorContext ctx) {
+        Identifier variableName = new Identifier(ctx.IDENTIFIER().getText());
+
+        Expression initializer = null;
+        if (ctx.getChildCount() == 3) {
+            initializer = (Expression) visit(ctx.expression());
+        }
+
+        return new VariableDeclarator(variableName, initializer);
+    }
+
+    @Override
+    public Node visitVariableDeclarators(@NotNull JavaScriptParser.VariableDeclaratorsContext ctx) {
+        int varDeclaratorCount = ctx.getChildCount() / 2;
+
+        List<VariableDeclarator> list = new ArrayList<VariableDeclarator>();
+        for (int i = 0; i < varDeclaratorCount; i++) {
+            list.add((VariableDeclarator) visit(ctx.variableDeclarator(i)));
+        }
+
+        return new VariableDeclarators(list);
     }
 }

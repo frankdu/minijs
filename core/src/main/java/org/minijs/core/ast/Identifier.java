@@ -1,6 +1,7 @@
 package org.minijs.core.ast;
 
 public class Identifier implements Expression {
+
     private final String mIdentifier;
 
     public Identifier(String id) {

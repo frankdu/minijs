@@ -3,10 +3,18 @@ package org.minijs.core.ast;
 public class NewExpression implements Expression {
 
     private final String mClassName;
-    private final ExpressionList mParameters;
+    private final ExpressionList mArguments;
 
-    public NewExpression(String className, ExpressionList parameters) {
+    public NewExpression(String className, ExpressionList arguments) {
         mClassName = className;
-        mParameters = parameters;
+        mArguments = arguments;
+    }
+
+    public String getClassName() {
+        return mClassName;
+    }
+
+    public ExpressionList getArguments() {
+        return mArguments;
     }
 }

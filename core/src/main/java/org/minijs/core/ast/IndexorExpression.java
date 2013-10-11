@@ -9,4 +9,12 @@ public class IndexorExpression implements Expression {
         mTargetExpression = targetExpression;
         mIndexExpression = indexExpression;
     }
+
+    public Expression getTargetExpression() {
+        return mTargetExpression;
+    }
+
+    public Expression getIndexExpression() {
+        return mIndexExpression;
+    }
 }

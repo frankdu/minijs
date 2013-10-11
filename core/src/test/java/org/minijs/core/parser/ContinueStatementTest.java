@@ -1,29 +1,25 @@
 package org.minijs.core.parser;
 
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.minijs.core.ast.BlockStatement;
-import org.minijs.core.ast.BreakStatement;
-import org.minijs.core.ast.Node;
-import org.minijs.core.ast.Statement;
+import org.minijs.core.ast.*;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-public class BreakStatementTest extends BaseParserTest {
+public class ContinueStatementTest extends BaseParserTest {
 
     @Test
     public void testBreakStatement() {
         String[] statements = {
-                "break",
-                "break;",
-                "break ;",
-                "break branch3",
-                "break branch4;",
-                "break branch5 ;"
+                "continue",
+                "continue;",
+                "continue ;",
+                "continue branch3",
+                "continue branch4;",
+                "continue branch5 ;"
         };
 
         String[] expectedLabels = {
@@ -40,10 +36,10 @@ public class BreakStatementTest extends BaseParserTest {
             List<Statement> statementList = ((BlockStatement) node).getSubStatementList();
             assertEquals(1, statementList.size());
 
-            assertEquals(BreakStatement.class, statementList.get(0).getClass());
+            assertEquals(ContinueStatement.class, statementList.get(0).getClass());
 
-            BreakStatement breakStatement = (BreakStatement) statementList.get(0);
-            assertEquals(expectedLabels[i], breakStatement.getLabel());
+            ContinueStatement continueStatement = (ContinueStatement) statementList.get(0);
+            assertEquals(expectedLabels[i], continueStatement.getLabel());
         }
     }
 }

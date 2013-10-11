@@ -19,4 +19,8 @@ public class IncDecUpdateExpression extends UnaryExpression {
         Preconditions.checkState(operator == Operator.INC || operator == Operator.DEC);
         mUpdateTiming = updateTiming;
     }
+
+    public UpdateTiming getUpdateTiming() {
+        return mUpdateTiming;
+    }
 }

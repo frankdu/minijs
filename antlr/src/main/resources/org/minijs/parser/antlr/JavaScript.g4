@@ -1,15 +1,12 @@
 grammar JavaScript;
 
-@header {
-}
-
 program
     :   statement+
     ;
 
 statement
-    :   'break' ';'?                                    #breakStatement
-    |   'continue' ';'?                                 #continueStatement
+    :   'break' IDENTIFIER? ';'?                        #breakStatement
+    |   'continue' IDENTIFIER? ';'?                     #continueStatement
     |   'return' expression ';'?                        #returnStatement
     |   variableDeclarators ';'?                        #variableDeclareStatement
     |   '{' statement* '}'                              #blockStatement
@@ -28,23 +25,11 @@ variableDeclarators
 
 
 variableDeclarator
-    :   IDENTIFIER ('=' variableInitializer)?
-    ;
-
-variableInitializer
-    :   expression
+    :   IDENTIFIER ('=' expression)?
     ;
 
 forControl
-    :   forInit? ';' expression? ';' forUpdate?
-    ;
-
-forInit
-    :   variableDeclarators
-    ;
-
-forUpdate
-    :   expressionList
+    :   variableDeclarators? ';' expression? ';' expressionList?
     ;
 
 parenthesizedExpression
