@@ -12,8 +12,11 @@ public class ArrayLiteralTest extends BaseParserTest {
 
     @Test
     public void testArrayLiteral() {
-        String literals[] = {"[]", "[2]", "['hello', 'world', 3 + 7]"};
-        int[] expectedLength = {0, 1, 3};
+        String literals[] = {
+                "[]", "[2]", "['hello', 'world', 3 + 7]",
+                "[[]]", "[[], []]", "[[], [], []]",
+        };
+        int[] expectedLength = {0, 1, 3, 1, 2, 3};
 
         for (int i = 0; i < literals.length; i++) {
             String s = literals[i];

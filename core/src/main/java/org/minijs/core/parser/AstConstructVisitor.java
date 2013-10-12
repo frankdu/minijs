@@ -456,17 +456,27 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     }
 
     @Override
-    public Node visitFunctionDeclaration(@NotNull JavaScriptParser.FunctionDeclarationContext ctx) {
-        ExpressionList expressionList = null;
-        JavaScriptParser.ExpressionListContext expressionListContext = ctx.expressionList();
-        if (expressionListContext != null) {
-            expressionList = (ExpressionList) visit(expressionListContext);
+    public Node visitFormalParameterList(@NotNull JavaScriptParser.FormalParameterListContext ctx) {
+        List<Identifier> params = new ArrayList<Identifier>();
+        int count = (ctx.getChildCount() + 1) / 2;
+        for (int i = 0; i < count; i++) {
+            params.add((Identifier) visit(ctx.IDENTIFIER(i)));
         }
 
+        return new FormalParameterList(params);
+    }
+
+    @Override
+    public Node visitFunctionDeclaration(@NotNull JavaScriptParser.FunctionDeclarationContext ctx) {
+        FormalParameterList parameterList = null;
+        JavaScriptParser.FormalParameterListContext formalParameterListContext = ctx.formalParameterList();
+        if (formalParameterListContext != null) {
+            parameterList = (FormalParameterList) visit(formalParameterListContext);
+        }
 
         return new FunctionDeclaration(
                 ctx.IDENTIFIER().getText(),
-                expressionList,
+                parameterList,
                 (BlockStatement) visit(ctx.blockStatement()));
     }
 }

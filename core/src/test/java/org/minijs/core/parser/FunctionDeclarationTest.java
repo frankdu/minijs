@@ -25,6 +25,14 @@ public class FunctionDeclarationTest extends BaseParserTest {
                 "function foo(a,b){a = 1 + b; return a;}",
         };
 
+        boolean[] expectedParameters = {
+                false, false, true, true, true, true, true, true,
+        };
+
+        int[] expectedParameterCounts = {
+                0, 0, 1, 1, 1, 2, 2, 2
+        };
+
         for (int i = 0; i < statements.length; i++) {
             initParser(statements[i]);
             ParseTree tree = mParser.program();
@@ -43,6 +51,13 @@ public class FunctionDeclarationTest extends BaseParserTest {
             assertEquals("foo", funcDeclaration.getFunctionName());
 
             assertEquals(BlockStatement.class, funcDeclaration.getFunctionBody().getClass());
+
+            if (expectedParameters[i]) {
+                assertNotNull(funcDeclaration.getParameters());
+                assertEquals(expectedParameterCounts[i], funcDeclaration.getParameters().getParameters().size());
+            } else {
+                assertNull(funcDeclaration.getParameters());
+            }
         }
     }
 }

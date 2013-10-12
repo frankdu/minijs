@@ -3,10 +3,10 @@ package org.minijs.core.ast;
 public class FunctionDeclaration implements Statement {
 
     private final String mFunctionName;
-    private final ExpressionList mParameters;
+    private final FormalParameterList mParameters;
     private final BlockStatement mFunctionBody;
 
-    public FunctionDeclaration(String name, ExpressionList params, BlockStatement body) {
+    public FunctionDeclaration(String name, FormalParameterList params, BlockStatement body) {
         mFunctionName = name;
         mParameters = params;
         mFunctionBody = body;
@@ -16,7 +16,7 @@ public class FunctionDeclaration implements Statement {
         return mFunctionName;
     }
 
-    public ExpressionList getParameters() {
+    public FormalParameterList getParameters() {
         return mParameters;
     }
 

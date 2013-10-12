@@ -16,10 +16,14 @@ statement
     |   'while' '(' expression ')' statement            #whileStatement
     |   'do' statement 'while' '(' expression ')' ';'?  #doWhileStatement
     |   IDENTIFIER ':' statement                        #labelledStatement
-    |   'function' IDENTIFIER '(' expressionList? ')'
+    |   'function' IDENTIFIER '(' formalParameterList? ')'
         blockStatement                                  #functionDeclaration
     |   expression ';'?                                 #expressionStatement
     |   ';'                                             #noopStatement
+    ;
+
+formalParameterList
+    :   IDENTIFIER (',' IDENTIFIER)*
     ;
 
 blockStatement
