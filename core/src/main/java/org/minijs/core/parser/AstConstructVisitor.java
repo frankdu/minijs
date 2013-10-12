@@ -446,4 +446,12 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
         return new VariableDeclarators(list);
     }
+
+    @Override
+    public Node visitLabelledStatement(@NotNull JavaScriptParser.LabelledStatementContext ctx) {
+        return new LabelledStatement(
+                ctx.IDENTIFIER().getText(),
+                (Statement) visit(ctx.statement())
+        );
+    }
 }

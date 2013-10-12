@@ -15,6 +15,7 @@ statement
     |   'for' '(' forControl ')' statement              #forStatement
     |   'while' '(' expression ')' statement            #whileStatement
     |   'do' statement 'while' '(' expression ')' ';'?  #doWhileStatement
+    |   IDENTIFIER ':' statement                        #labelledStatement
     |   expression ';'?                                 #expressionStatement
     |   ';'                                             #noopStatement
     ;
