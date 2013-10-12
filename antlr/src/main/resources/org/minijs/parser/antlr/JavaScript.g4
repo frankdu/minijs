@@ -7,17 +7,23 @@ program
 statement
     :   'break' IDENTIFIER? ';'?                        #breakStatement
     |   'continue' IDENTIFIER? ';'?                     #continueStatement
-    |   'return' expression ';'?                        #returnStatement
+    |   'return' expression? ';'?                        #returnStatement
     |   variableDeclarators ';'?                        #variableDeclareStatement
-    |   '{' statement* '}'                              #blockStatement
+    |   blockStatement                                  #blockStatement2
     |   'if' '(' expression ')' statement
         ('else' statement)?                             #ifStatement
     |   'for' '(' forControl ')' statement              #forStatement
     |   'while' '(' expression ')' statement            #whileStatement
     |   'do' statement 'while' '(' expression ')' ';'?  #doWhileStatement
     |   IDENTIFIER ':' statement                        #labelledStatement
+    |   'function' IDENTIFIER '(' expressionList? ')'
+        blockStatement                                  #functionDeclaration
     |   expression ';'?                                 #expressionStatement
     |   ';'                                             #noopStatement
+    ;
+
+blockStatement
+    :   '{' statement* '}'
     ;
 
 variableDeclarators

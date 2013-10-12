@@ -454,4 +454,19 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 (Statement) visit(ctx.statement())
         );
     }
+
+    @Override
+    public Node visitFunctionDeclaration(@NotNull JavaScriptParser.FunctionDeclarationContext ctx) {
+        ExpressionList expressionList = null;
+        JavaScriptParser.ExpressionListContext expressionListContext = ctx.expressionList();
+        if (expressionListContext != null) {
+            expressionList = (ExpressionList) visit(expressionListContext);
+        }
+
+
+        return new FunctionDeclaration(
+                ctx.IDENTIFIER().getText(),
+                expressionList,
+                (BlockStatement) visit(ctx.blockStatement()));
+    }
 }
