@@ -59,8 +59,8 @@ expression
     |   expression ('+' | '-') expression                       #plusExpression
     |   expression ('<' | '<=' | '>' | '>=' |
                     'in' | 'instanceof') expression             #relationalExpression
-    |   expression ('==' | '!=' | '===' | '!==') expression     #loginEqualityExpression
-    |   expression '&&' expression                              #loginAndExpression
+    |   expression ('==' | '!=' | '===' | '!==') expression     #logicEqualityExpression
+    |   expression '&&' expression                              #logicAndExpression
     |   expression '||' expression                              #logicOrExpression
     |   expression '?' expression ':' expression                #conditionalExpression
     |   expression

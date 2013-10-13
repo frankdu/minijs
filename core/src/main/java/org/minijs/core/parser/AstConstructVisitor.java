@@ -122,7 +122,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     }
 
     @Override
-    public Node visitLoginEqualityExpression(@NotNull JavaScriptParser.LoginEqualityExpressionContext ctx) {
+    public Node visitLogicEqualityExpression(@NotNull JavaScriptParser.LogicEqualityExpressionContext ctx) {
         String str = ctx.getChild(1).getText();
         Operator op = sOperatorMap.get(str);
         Preconditions.checkNotNull(op);
@@ -133,7 +133,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     }
 
     @Override
-    public Node visitLoginAndExpression(@NotNull JavaScriptParser.LoginAndExpressionContext ctx) {
+    public Node visitLogicAndExpression(@NotNull JavaScriptParser.LogicAndExpressionContext ctx) {
         String str = ctx.getChild(1).getText();
         Operator op = sOperatorMap.get(str);
         Preconditions.checkNotNull(op);
