@@ -21,32 +21,16 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     private static final NullLiteral NULL_LITERAL = new NullLiteral();
     private static final UndefinedLiteral UNDEFINED_LITERAL = new UndefinedLiteral();
     private static final ExpressionList EMPTY_EXPRESSION_LIST = new ExpressionList(new ArrayList<Expression>());
-    private static final Map<String, Operator> sOperatorMap = Collections.unmodifiableMap(
-            new HashMap<String, Operator>() {{
-                put("*", Operator.MUL);
-                put("/", Operator.DIV);
-                put("%", Operator.MOD);
-                put("+", Operator.PLUS);
-                put("-", Operator.MINUS);
 
-                put("<", Operator.LT);
-                put("<=", Operator.LE);
-                put(">", Operator.GT);
-                put(">=", Operator.GE);
-                put("in", Operator.IN);
-                put("instanceof", Operator.INSTANCEOF);
-                put("==", Operator.EQ);
-                put("!=", Operator.NEQ);
-                put("===", Operator.EXACT_EQ);
-                put("!==", Operator.EXACT_NEQ);
+    private static final Map<String, Operator> sOperatorMap;
 
-                put("&&", Operator.AND);
-                put("||", Operator.OR);
-
-                put("++", Operator.INC);
-                put("--", Operator.DEC);
-            }}
-    );
+    static {
+        Map<String, Operator> map = new HashMap<String, Operator>();
+        for (Operator op : Operator.values()) {
+            map.put(op.toString(), op);
+        }
+        sOperatorMap = Collections.unmodifiableMap(map);
+    }
 
     @Override
     public Node visitLiteral(@NotNull JavaScriptParser.LiteralContext ctx) {

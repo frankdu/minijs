@@ -32,8 +32,4 @@ public enum Operator {
     public String toString() {
         return mOpString;
     }
-
-    public String getOperatorString() {
-        return mOpString;
-    }
 }
