@@ -185,31 +185,31 @@ NULL_LITERAL
     ;
 
 // Keywords: reserved
-CATCH:      'catch';
-DEBUGGER:   'debugger';
-FINALLY:    'finally';
-THROW:      'throw';
-TRY:        'try';
-WITH:       'with';
-VAR:        'var';
-IF:         'if';
-WHILE:      'while';
-DO:         'do';
-FOR:        'for';
-CONTINUE:   'continue';
 BREAK:      'break';
-RETURN:     'return';
-FUNCTION:   'function';
-NEW:        'new';
+CASE:       'case';
+CATCH:      'catch';
+CONTINUE:   'continue';
+DEBUGGER:   'debugger';
+DEFAULT:    'default';
 DELETE:     'delete';
+DO:         'do';
+FINALLY:    'finally';
+FOR:        'for';
+FUNCTION:   'function';
+IF:         'if';
 IN:         'in';
 INSTANCEOF: 'instanceof';
-TYPEOF:     'typeof';
-VOID:       'void';
-THIS:       'this';
+NEW:        'new';
+RETURN:     'return';
 SWITCH:     'switch';
-CASE:       'case';
-DEFAULT:    'default';
+THIS:       'this';
+THROW:      'throw';
+TRY:        'try';
+TYPEOF:     'typeof';
+VAR:        'var';
+VOID:       'void';
+WHILE:      'while';
+WITH:       'with';
 
 // Keywords: reserved for future use
 CLASS:      'class';
