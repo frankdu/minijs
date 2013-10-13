@@ -184,7 +184,13 @@ NULL_LITERAL
     :   'null'
     ;
 
-// Keywords
+// Keywords: reserved
+CATCH:      'catch';
+DEBUGGER:   'debugger';
+FINALLY:    'finally';
+THROW:      'throw';
+TRY:        'try';
+WITH:       'with';
 VAR:        'var';
 IF:         'if';
 WHILE:      'while';
@@ -204,6 +210,15 @@ THIS:       'this';
 SWITCH:     'switch';
 CASE:       'case';
 DEFAULT:    'default';
+
+// Keywords: reserved for future use
+CLASS:      'class';
+ENUM:       'enum';
+EXPORT:     'export';
+EXTENDS:    'extends';
+IMPORT:     'import';
+SUPER:      'super';
+
 
 IDENTIFIER
     :   [a-zA-Z$_] [a-zA-Z0-9$_]*
