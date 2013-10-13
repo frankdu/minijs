@@ -1,7 +1,5 @@
 package org.minijs.core.ast;
 
-import org.minijs.core.ast.Identifier;
-import org.minijs.core.ast.Node;
 import org.minijs.core.util.Preconditions;
 
 import java.util.Collections;

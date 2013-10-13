@@ -20,7 +20,27 @@ public enum Operator {
     AND("&&"),
     OR("||"),
     IN("in"),
-    INSTANCEOF("instanceof");
+    INSTANCEOF("instanceof"),
+    TYPE("typeof"),
+    VOID("void"),
+    DELETE("delete"),
+    BIT_LEFT_SHIFT("<<"),
+    BIT_RIGHT_SHIFT(">>"),
+    BIT_UNSIGNED_RIGHT_SHITF(">>>"),
+    ASSIGN("="),
+    PLUS_ASSIGN("+="),
+    MINUS_ASSIGN("-="),
+    MUL_ASSIGN("*="),
+    DIV_ASSIGN("/="),
+    MOD_ASSIGN("%="),
+    BIT_NOT("~"),
+    BIT_LEFT_SHIFT_ASSIGN("<<="),
+    BIT_RIGHT_SHIFT_ASSIGN(">>="),
+    BIT_UNSIGNED_RIGHT_SHIFT_ASSIGN(">>>="),
+    BIT_AND_ASSIGN("&="),
+    BIT_XOR_ASSIGN("^="),
+    BIT_OR_ASSIGN("|="),
+    ;
 
     private final String mOpString;
 

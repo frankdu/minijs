@@ -173,15 +173,6 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
         Token token = ctx.getStart();
         Expression subExpr = (Expression) visit(ctx.expression());
         switch (token.getType()) {
-            case JavaScriptLexer.PLUS:
-                return new UnaryExpression(Operator.PLUS, subExpr);
-
-            case JavaScriptLexer.MINUS:
-                return new UnaryExpression(Operator.MINUS, subExpr);
-
-            case JavaScriptLexer.NOT:
-                return new UnaryExpression(Operator.NOT, subExpr);
-
             case JavaScriptLexer.INC:
                 return new IncDecUpdateExpression(
                         IncDecUpdateExpression.UpdateTiming.PRE,
@@ -195,6 +186,17 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                         Operator.DEC,
                         subExpr
                 );
+
+            case JavaScriptLexer.NOT:
+            case JavaScriptLexer.BITWISE_NOT:
+            case JavaScriptLexer.PLUS:
+            case JavaScriptLexer.MINUS:
+            case JavaScriptLexer.TYPEOF:
+            case JavaScriptLexer.VOID:
+            case JavaScriptLexer.DELETE:
+                Operator op = sOperatorMap.get(token.getText());
+                Preconditions.checkNotNull(op);
+                return new UnaryExpression(op, subExpr);
 
             default:
                 return super.visitUnaryExpression(ctx);

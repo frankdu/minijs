@@ -48,15 +48,16 @@ parenthesizedExpression
     ;
 
 expression
-    :   expression '.' IDENTIFIER                               #propertyExpression
+    :   'new' IDENTIFIER '(' expressionList? ')'                #newExpression
+    |   expression '.' IDENTIFIER                               #propertyExpression
     |   expression '[' expression ']'                           #indexorExpression
-    |   'new' IDENTIFIER '(' expressionList? ')'                #newExpression
     |   expression '(' expressionList? ')'                      #functionCallExpression
     |   primaryExpression                                       #primaryExpression2
     |   expression (INC | DEC)                                  #postUpdateExpression
     |   unaryExpression                                         #unaryExpression2
     |   expression ('*' | '/' | '%') expression                 #mulExpression
     |   expression ('+' | '-') expression                       #plusExpression
+    |   expression ('<<' | '>>' | '>>>') expression             #bitwiseShiftExpression
     |   expression ('<' | '<=' | '>' | '>=' |
                     'in' | 'instanceof') expression             #relationalExpression
     |   expression ('==' | '!=' | '===' | '!==') expression     #logicEqualityExpression
@@ -69,14 +70,18 @@ expression
             |   '-='<assoc=right>
             |   '*='<assoc=right>
             |   '/='<assoc=right>
-            |   '&='<assoc=right>
-            |   '|='<assoc=right>
             |   '%='<assoc=right>
+            |   '<<='<assoc=right>
+            |   '>>='<assoc=right>
+            |   '>>>='<assoc=right>
+            |   '&='<assoc=right>
+            |   '^='<assoc=right>
+            |   '|='<assoc=right>
             ) expression                                        #assignmentExpression
     ;
 
 unaryExpression
-    :   (INC | DEC | '!' | '~' | '+' | '-' | 'delete') expression
+    :   (INC | DEC | '!' | '~' | '+' | '-' | 'typeof' | 'void' | 'delete') expression
     ;
 
 expressionList
@@ -84,10 +89,11 @@ expressionList
     ;
 
 primaryExpression
-    :   IDENTIFIER
+    :   'this'
+    |   IDENTIFIER
     |   literal
-    |   parenthesizedExpression
     |   arrayLiteral
+    |   parenthesizedExpression
     ;
 
 arrayLiteral
@@ -134,6 +140,9 @@ NEW:        'new';
 DELETE:     'delete';
 IN:         'in';
 INSTANCEOF: 'instanceof';
+TYPEOF:     'typeof';
+VOID:       'void';
+THIS:       'this';
 
 IDENTIFIER
     :   [a-zA-Z$_] [a-zA-Z0-9$_]*
