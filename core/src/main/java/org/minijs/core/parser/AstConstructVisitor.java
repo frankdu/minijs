@@ -18,7 +18,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     private static final ContinueStatement CONTINUE_STATEMENT = new ContinueStatement();
     private static final ReturnStatement RETURN_VOID_STATEMENT = new ReturnStatement(null);
 
-    private static final ThisExpression THIS_EXPRESSION = new ThisExpression();
+    private static final ThisLiteral THIS_LITERAL = new ThisLiteral();
 
     private static final NullLiteral NULL_LITERAL = new NullLiteral();
     private static final UndefinedLiteral UNDEFINED_LITERAL = new UndefinedLiteral();
@@ -178,7 +178,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
         switch (token.getType()) {
             case JavaScriptLexer.THIS:
-                return THIS_EXPRESSION;
+                return THIS_LITERAL;
 
             case JavaScriptLexer.IDENTIFIER:
                 return new Identifier(text);
