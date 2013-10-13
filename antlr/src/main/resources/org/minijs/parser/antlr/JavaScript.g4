@@ -5,27 +5,37 @@ program
     ;
 
 statement
-    :   'break' IDENTIFIER? ';'?                        #breakStatement
-    |   'continue' IDENTIFIER? ';'?                     #continueStatement
-    |   'return' expression? ';'?                        #returnStatement
-    |   variableDeclarators ';'?                        #variableDeclareStatement
-    |   blockStatement                                  #blockStatement2
+    :   'break' IDENTIFIER? ';'?                          #breakStatement
+    |   'continue' IDENTIFIER? ';'?                       #continueStatement
+    |   'return' expression? ';'?                         #returnStatement
+    |   variableDeclarators ';'?                          #variableDeclareStatement
+    |   blockStatement                                    #blockStatement2
     |   'if' '(' expression ')' statement
-        ('else' statement)?                             #ifStatement
-    |   'for' '(' forControl ')' statement              #forStatement
+        ('else' statement)?                               #ifStatement
+    |   'for' '(' forControl ')' statement                #forStatement
     |   'for' '(' 'var'? Identifier 'in' expression ')'
-        statement                                       #forInStatement
-    |   'while' '(' expression ')' statement            #whileStatement
-    |   'do' statement 'while' '(' expression ')' ';'?  #doWhileStatement
-    |   IDENTIFIER ':' statement                        #labelledStatement
+        statement                                         #forInStatement
+    |   'while' '(' expression ')' statement              #whileStatement
+    |   'do' statement 'while' '(' expression ')' ';'?    #doWhileStatement
+    |   'switch' '(' expression ')'
+        '{' caseClause* (defaultClause caseClause*)? '}'  #switchStatement
+    |   IDENTIFIER ':' statement                          #labelledStatement
     |   'function' IDENTIFIER '(' formalParameterList? ')'
-        blockStatement                                  #functionDeclaration
-    |   expression ';'?                                 #expressionStatement
-    |   ';'                                             #noopStatement
+        blockStatement                                    #functionDeclaration
+    |   expression ';'?                                   #expressionStatement
+    |   ';'                                               #noopStatement
     ;
 
 formalParameterList
     :   IDENTIFIER (',' IDENTIFIER)*
+    ;
+
+caseClause
+    :   'case' expression ':' statement*
+    ;
+
+defaultClause
+    :   'default' ':' statement*
     ;
 
 blockStatement
@@ -146,6 +156,9 @@ INSTANCEOF: 'instanceof';
 TYPEOF:     'typeof';
 VOID:       'void';
 THIS:       'this';
+SWITCH:     'switch';
+CASE:       'case';
+DEFAULT:    'default';
 
 IDENTIFIER
     :   [a-zA-Z$_] [a-zA-Z0-9$_]*

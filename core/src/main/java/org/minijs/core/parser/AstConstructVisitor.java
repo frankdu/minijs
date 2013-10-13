@@ -506,4 +506,52 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 parameterList,
                 (BlockStatement) visit(ctx.blockStatement()));
     }
+
+    @Override
+    public Node visitDefaultClause(@NotNull JavaScriptParser.DefaultClauseContext ctx) {
+        int statementCount = ctx.getChildCount() - 2;
+        List<Statement> list = new ArrayList<Statement>();
+        for (int i = 0; i < statementCount; i++) {
+            list.add((Statement) visit(ctx.statement(i)));
+        }
+        return new CaseStatement(list);
+    }
+
+    @Override
+    public Node visitCaseClause(@NotNull JavaScriptParser.CaseClauseContext ctx) {
+        int statementCount = ctx.getChildCount() - 3;
+        List<Statement> list = new ArrayList<Statement>();
+        for (int i = 0; i < statementCount; i++) {
+            list.add((Statement) visit(ctx.statement(i)));
+        }
+
+        return new CaseStatement(
+                (Expression) visit(ctx.expression()),
+                list
+        );
+    }
+
+    @Override
+    public Node visitSwitchStatement(@NotNull JavaScriptParser.SwitchStatementContext ctx) {
+        Expression expression = (Expression) visit(ctx.expression());
+        CaseStatement defaultCaseStatement = null;
+        int caseStatementCount = ctx.getChildCount() - 6;
+
+        JavaScriptParser.DefaultClauseContext defaultClauseContext = ctx.defaultClause();
+        if (defaultClauseContext != null) {
+            defaultCaseStatement = (CaseStatement) visit(defaultClauseContext);
+            caseStatementCount -= 1;
+        }
+
+        List<CaseStatement> caseStatementList = new ArrayList<CaseStatement>();
+        for (int i = 0; i < caseStatementCount; i++) {
+            caseStatementList.add((CaseStatement) visit(ctx.caseClause(i)));
+        }
+
+        return new SwitchStatement(
+                expression,
+                caseStatementList,
+                defaultCaseStatement
+        );
+    }
 }

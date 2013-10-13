@@ -8,6 +8,12 @@ public class Preconditions {
         }
     }
 
+    public static void checkNull(Object obj) {
+        if (obj != null) {
+            throw new IllegalArgumentException("Expect null!");
+        }
+    }
+
     public static void checkState(boolean state) {
         checkState(state, null);
     }
