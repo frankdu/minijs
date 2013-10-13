@@ -414,6 +414,15 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     }
 
     @Override
+    public Node visitForInStatement(@NotNull JavaScriptParser.ForInStatementContext ctx) {
+        return new ForInStatement(
+                ctx.Identifier().getText(),
+                (Expression) visit(ctx.expression()),
+                (Statement) visit(ctx.statement())
+        );
+    }
+
+    @Override
     public Node visitForControl(@NotNull JavaScriptParser.ForControlContext ctx) {
         VariableDeclarators variableDeclarators = null;
         Expression conditionExpression = null;

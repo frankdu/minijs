@@ -13,6 +13,8 @@ statement
     |   'if' '(' expression ')' statement
         ('else' statement)?                             #ifStatement
     |   'for' '(' forControl ')' statement              #forStatement
+    |   'for' '(' 'var'? Identifier 'in' expression ')'
+        statement                                       #forInStatement
     |   'while' '(' expression ')' statement            #whileStatement
     |   'do' statement 'while' '(' expression ')' ';'?  #doWhileStatement
     |   IDENTIFIER ':' statement                        #labelledStatement
