@@ -1,4 +1,49 @@
+/**
+ * This comes as part of minijs project https://github.com/frankdu/minijs
+ *
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *    http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 grammar JavaScript;
+
+/**
+ * Here we intent to implement just a subset of JavaScript v1.5 (ECMA-262 3rd edition).
+ *
+ *
+ *
+ * Below are unsupported grammars and reason, separated by colon (:)
+ *
+ * - import/export: not in ECMA-262 3E
+ * - get/set operators: not in ECMA-262 3E
+ * - const: not in ECMA-262 3E
+ * - yield: v1.7
+ * - let: v1.7
+ * - E4X: v1.6, deprecated
+ * - for each...in: deprecated as part of E4X
+ * - for...of: experimental in EcmaScript 6
+ * - debugger: ECMA-262 5E
+ * - with: usage not recommended. Source of confusing bugs and compatibility issues
+ *
+ *
+ *
+ * Below are unsupported grammar rules, but in plan:
+ *
+ * - function declaration expression
+ * - Comma operator (,) or ExpressionNoIn
+ * - try statement
+ * - throw statement
+ */
 
 program
     :   statement+
