@@ -18,6 +18,8 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     private static final ContinueStatement CONTINUE_STATEMENT = new ContinueStatement();
     private static final ReturnStatement RETURN_VOID_STATEMENT = new ReturnStatement(null);
 
+    private static final ThisExpression THIS_EXPRESSION = new ThisExpression();
+
     private static final NullLiteral NULL_LITERAL = new NullLiteral();
     private static final UndefinedLiteral UNDEFINED_LITERAL = new UndefinedLiteral();
     private static final ExpressionList EMPTY_EXPRESSION_LIST = new ExpressionList(new ArrayList<Expression>());
@@ -95,6 +97,17 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     }
 
     @Override
+    public Node visitBitwiseShiftExpression(@NotNull JavaScriptParser.BitwiseShiftExpressionContext ctx) {
+        String str = ctx.getChild(1).getText();
+        Operator op = sOperatorMap.get(str);
+        Preconditions.checkNotNull(op);
+        return new BinaryExpression(
+                op,
+                (Expression)visit(ctx.expression(0)),
+                (Expression)visit(ctx.expression(1)));
+    }
+
+    @Override
     public Node visitRelationalExpression(@NotNull JavaScriptParser.RelationalExpressionContext ctx) {
         String str = ctx.getChild(1).getText();
         Operator op = sOperatorMap.get(str);
@@ -107,6 +120,17 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
     @Override
     public Node visitLogicEqualityExpression(@NotNull JavaScriptParser.LogicEqualityExpressionContext ctx) {
+        String str = ctx.getChild(1).getText();
+        Operator op = sOperatorMap.get(str);
+        Preconditions.checkNotNull(op);
+        return new BinaryExpression(
+                op,
+                (Expression)visit(ctx.expression(0)),
+                (Expression)visit(ctx.expression(1)));
+    }
+
+    @Override
+    public Node visitBitwiseLogicExpression(@NotNull JavaScriptParser.BitwiseLogicExpressionContext ctx) {
         String str = ctx.getChild(1).getText();
         Operator op = sOperatorMap.get(str);
         Preconditions.checkNotNull(op);
@@ -153,6 +177,9 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
         String text = token.getText();
 
         switch (token.getType()) {
+            case JavaScriptLexer.THIS:
+                return THIS_EXPRESSION;
+
             case JavaScriptLexer.IDENTIFIER:
                 return new Identifier(text);
 
@@ -215,10 +242,11 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     @Override
     public Node visitPostUpdateExpression(@NotNull JavaScriptParser.PostUpdateExpressionContext ctx) {
         String opStr = ctx.getChild(1).getText();
-        Operator operator = sOperatorMap.get(opStr);
+        Operator op = sOperatorMap.get(opStr);
+        Preconditions.checkNotNull(op);
         return new IncDecUpdateExpression(
                 IncDecUpdateExpression.UpdateTiming.POST,
-                operator,
+                op,
                 (Expression) visit(ctx.expression())
         );
     }
@@ -266,7 +294,11 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
 
     @Override
     public Node visitAssignmentExpression(@NotNull JavaScriptParser.AssignmentExpressionContext ctx) {
+        String opStr = ctx.getChild(1).getText();
+        Operator op = sOperatorMap.get(opStr);
+        Preconditions.checkNotNull(op);
         return new AssignmentExpression(
+                op,
                 (Expression) visit(ctx.expression(0)),
                 (Expression) visit(ctx.expression(1))
         );

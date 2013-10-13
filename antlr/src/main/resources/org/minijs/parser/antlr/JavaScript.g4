@@ -61,6 +61,7 @@ expression
     |   expression ('<' | '<=' | '>' | '>=' |
                     'in' | 'instanceof') expression             #relationalExpression
     |   expression ('==' | '!=' | '===' | '!==') expression     #logicEqualityExpression
+    |   expression ('&' | '^' | '|') expression                 #bitwiseLogicExpression
     |   expression '&&' expression                              #logicAndExpression
     |   expression '||' expression                              #logicOrExpression
     |   expression '?' expression ':' expression                #conditionalExpression
