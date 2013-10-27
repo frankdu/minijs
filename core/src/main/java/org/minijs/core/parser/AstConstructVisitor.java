@@ -578,4 +578,56 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 (Expression) visit(ctx.expression())
         );
     }
+
+    @Override
+    public Node visitFinallyClause(@NotNull JavaScriptParser.FinallyClauseContext ctx) {
+        return new FinallyClause(
+                (BlockStatement) visit(ctx.blockStatement())
+        );
+    }
+
+    @Override
+    public Node visitCatchClause(@NotNull JavaScriptParser.CatchClauseContext ctx) {
+        Expression conditionExpr = null;
+        JavaScriptParser.ExpressionContext expressionContext = ctx.expression();
+        if (expressionContext != null) {
+            conditionExpr = (Expression) visit(expressionContext);
+        }
+
+        return new CatchClause(
+                ctx.IDENTIFIER().getText(),
+                conditionExpr,
+                (BlockStatement) visit(ctx.blockStatement())
+        );
+    }
+
+    @Override
+    public Node visitTryStatement(@NotNull JavaScriptParser.TryStatementContext ctx) {
+        BlockStatement tryBlockStatement = (BlockStatement) visit(ctx.blockStatement());
+        List<CatchClause> catchClauseList = null;
+
+        int catchClauseCount = ctx.getChildCount() - 2;
+        JavaScriptParser.FinallyClauseContext finallyClauseContext = ctx.finallyClause();
+        if (finallyClauseContext != null) {
+            catchClauseCount--;
+        }
+
+        if (catchClauseCount > 0) {
+            catchClauseList = new ArrayList<CatchClause>();
+            for (int i = 0; i < catchClauseCount; i++) {
+                catchClauseList.add((CatchClause) visit(ctx.catchClause(i)));
+            }
+        }
+
+        FinallyClause finallyClause = null;
+        if (finallyClauseContext != null) {
+            finallyClause = new FinallyClause((BlockStatement) visit(finallyClauseContext));
+        }
+
+        return new TryStatement(
+                tryBlockStatement,
+                catchClauseList,
+                finallyClause
+        );
+    }
 }

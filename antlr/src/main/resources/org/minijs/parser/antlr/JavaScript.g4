@@ -40,7 +40,6 @@ grammar JavaScript;
  * Below are unsupported grammar rules, but in plan:
  *
  * - Comma operator (,) or ExpressionNoIn
- * - try statement
  */
 
 program
@@ -52,8 +51,9 @@ statement
     |   'continue' IDENTIFIER? ';'?                       #continueStatement
     |   'return' expression? ';'?                         #returnStatement
     |   'throw' expression ';'?                           #throwStatement
+    |   tryStatement                                      #tryStatement0
     |   variableDeclarators ';'?                          #variableDeclareStatement
-    |   blockStatement                                    #blockStatement2
+    |   blockStatement                                    #blockStatement0
     |   'if' '(' expression ')' statement
         ('else' statement)?                               #ifStatement
     |   'for' '(' forControl ')' statement                #forStatement
@@ -68,6 +68,19 @@ statement
         blockStatement                                    #functionDeclaration
     |   expression ';'?                                   #expressionStatement
     |   ';'                                               #noopStatement
+    ;
+
+tryStatement
+    :   'try' blockStatement finallyClause
+    |   'try' blockStatement catchClause+ finallyClause?
+    ;
+
+catchClause
+    :   'catch' '(' IDENTIFIER ('if' expression)? ')' blockStatement
+    ;
+
+finallyClause
+    :   'finally' blockStatement
     ;
 
 formalParameterList
