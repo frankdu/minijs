@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNull;
 public class FunctionDeclarationTest extends BaseParserTest {
 
     @Test
-    public void testIfStatement() {
+    public void testFunctionDeclarationStatement() {
         String[] statements = {
                 "function foo() {}",
                 "function foo() {a = 1;}",

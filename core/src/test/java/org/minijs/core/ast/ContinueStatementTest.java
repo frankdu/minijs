@@ -11,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 public class ContinueStatementTest extends BaseParserTest {
 
     @Test
-    public void testBreakStatement() {
+    public void testContinueStatement() {
         String[] statements = {
                 "continue",
                 "continue;",

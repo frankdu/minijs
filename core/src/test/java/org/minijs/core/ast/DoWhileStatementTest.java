@@ -12,7 +12,7 @@ import static org.junit.Assert.assertNull;
 public class DoWhileStatementTest extends BaseParserTest {
 
     @Test
-    public void testIfStatement() {
+    public void testDoWhileStatement() {
         String[] statements = {
                 "do{}while(true);",
                 "do{if(true){}}while(false);",

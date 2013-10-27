@@ -9,7 +9,7 @@ import static org.junit.Assert.assertTrue;
 
 public class AssignmentExpressionTest extends BaseParserTest {
     @Test
-    public void testBinaryExpression() {
+    public void testAssignmentExpression() {
         String expressions[] = {
                 "a = 3",
                 "a = b",
