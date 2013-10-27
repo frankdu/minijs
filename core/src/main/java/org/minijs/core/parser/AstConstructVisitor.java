@@ -305,6 +305,23 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
     }
 
     @Override
+    public Node visitFunctionDeclarationExpression(@NotNull JavaScriptParser.FunctionDeclarationExpressionContext ctx) {
+        TerminalNode terminalNode = ctx.IDENTIFIER();
+        String functionName = (terminalNode == null ? null : terminalNode.getText());
+
+        FormalParameterList parameterList = null;
+        JavaScriptParser.FormalParameterListContext formalParameterListContext = ctx.formalParameterList();
+        if (formalParameterListContext != null) {
+            parameterList = (FormalParameterList) visit(formalParameterListContext);
+        }
+
+        return new FunctionDeclarationExpression(
+                functionName,
+                parameterList,
+                (BlockStatement) visit(ctx.blockStatement()));
+    }
+
+    @Override
     public Node visitBreakStatement(@NotNull JavaScriptParser.BreakStatementContext ctx) {
         TerminalNode terminalNode = ctx.IDENTIFIER();
         if (terminalNode != null) {

@@ -105,7 +105,9 @@ parenthesizedExpression
     ;
 
 expression
-    :   'new' IDENTIFIER '(' expressionList? ')'                #newExpression
+    :   'function' IDENTIFIER? '(' formalParameterList? ')'
+            blockStatement                                      #functionDeclarationExpression
+    |   'new' IDENTIFIER '(' expressionList? ')'                #newExpression
     |   expression '.' IDENTIFIER                               #propertyExpression
     |   expression '[' expression ']'                           #indexorExpression
     |   expression '(' expressionList? ')'                      #functionCallExpression
