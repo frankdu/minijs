@@ -40,6 +40,8 @@ grammar JavaScript;
  * Below are unsupported grammar rules, but in plan:
  *
  * - Comma operator (,) or ExpressionNoIn
+ * - Regular expression literal
+ * - Object literal
  */
 
 program
@@ -57,7 +59,7 @@ statement
     |   'if' '(' expression ')' statement
         ('else' statement)?                               #ifStatement
     |   'for' '(' forControl ')' statement                #forStatement
-    |   'for' '(' 'var'? Identifier 'in' expression ')'
+    |   'for' '(' 'var'? IDENTIFIER 'in' expression ')'
         statement                                         #forInStatement
     |   'while' '(' expression ')' statement              #whileStatement
     |   'do' statement 'while' '(' expression ')' ';'?    #doWhileStatement
