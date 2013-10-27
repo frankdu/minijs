@@ -1,10 +1,7 @@
-package org.minijs.core.parser;
+package org.minijs.core.ast;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
-import org.minijs.core.ast.Node;
-import org.minijs.core.ast.NullLiteral;
-import org.minijs.core.ast.UndefinedLiteral;
 
 import static org.junit.Assert.assertTrue;
 

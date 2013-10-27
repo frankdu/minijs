@@ -1,12 +1,7 @@
-package org.minijs.core.parser;
+package org.minijs.core.ast;
 
 import org.antlr.v4.runtime.tree.ParseTree;
-import org.junit.Ignore;
 import org.junit.Test;
-import org.minijs.core.ast.BlockStatement;
-import org.minijs.core.ast.BreakStatement;
-import org.minijs.core.ast.Node;
-import org.minijs.core.ast.Statement;
 
 import java.util.List;
 

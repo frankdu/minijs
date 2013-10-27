@@ -1,8 +1,7 @@
-package org.minijs.core.parser;
+package org.minijs.core.ast;
 
 import org.antlr.v4.runtime.tree.ParseTree;
 import org.junit.Test;
-import org.minijs.core.ast.*;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;

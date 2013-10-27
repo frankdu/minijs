@@ -1,8 +1,9 @@
-package org.minijs.core.parser;
+package org.minijs.core.ast;
 
 import org.antlr.v4.runtime.ANTLRInputStream;
 import org.antlr.v4.runtime.CommonTokenStream;
 import org.junit.Before;
+import org.minijs.core.parser.AstConstructVisitor;
 import org.minijs.parser.antlr.JavaScriptLexer;
 import org.minijs.parser.antlr.JavaScriptParser;
 
