@@ -39,10 +39,8 @@ grammar JavaScript;
  *
  * Below are unsupported grammar rules, but in plan:
  *
- * - function declaration expression
  * - Comma operator (,) or ExpressionNoIn
  * - try statement
- * - throw statement
  */
 
 program
@@ -53,6 +51,7 @@ statement
     :   'break' IDENTIFIER? ';'?                          #breakStatement
     |   'continue' IDENTIFIER? ';'?                       #continueStatement
     |   'return' expression? ';'?                         #returnStatement
+    |   'throw' expression ';'?                           #throwStatement
     |   variableDeclarators ';'?                          #variableDeclareStatement
     |   blockStatement                                    #blockStatement2
     |   'if' '(' expression ')' statement

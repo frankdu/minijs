@@ -571,4 +571,11 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
                 defaultCaseStatement
         );
     }
+
+    @Override
+    public Node visitThrowStatement(@NotNull JavaScriptParser.ThrowStatementContext ctx) {
+        return new ThrowStatement(
+                (Expression) visit(ctx.expression())
+        );
+    }
 }
