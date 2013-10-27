@@ -501,7 +501,7 @@ public class AstConstructVisitor extends JavaScriptBaseVisitor <Node> {
             parameterList = (FormalParameterList) visit(formalParameterListContext);
         }
 
-        return new FunctionDeclaration(
+        return new FunctionDeclarationStatement(
                 ctx.IDENTIFIER().getText(),
                 parameterList,
                 (BlockStatement) visit(ctx.blockStatement()));

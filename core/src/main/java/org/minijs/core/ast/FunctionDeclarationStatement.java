@@ -1,12 +1,12 @@
 package org.minijs.core.ast;
 
-public class FunctionDeclaration implements Statement {
+public class FunctionDeclarationStatement implements Statement {
 
     private final String mFunctionName;
     private final FormalParameterList mParameters;
     private final BlockStatement mFunctionBody;
 
-    public FunctionDeclaration(String name, FormalParameterList params, BlockStatement body) {
+    public FunctionDeclarationStatement(String name, FormalParameterList params, BlockStatement body) {
         mFunctionName = name;
         mParameters = params;
         mFunctionBody = body;

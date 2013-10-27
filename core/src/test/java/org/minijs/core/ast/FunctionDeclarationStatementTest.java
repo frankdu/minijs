@@ -9,7 +9,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
-public class FunctionDeclarationTest extends BaseParserTest {
+public class FunctionDeclarationStatementTest extends BaseParserTest {
 
     @Test
     public void testFunctionDeclarationStatement() {
@@ -43,9 +43,9 @@ public class FunctionDeclarationTest extends BaseParserTest {
             assertEquals(1, statementList.size());
 
             Statement statement = statementList.get(0);
-            assertEquals(FunctionDeclaration.class, statement.getClass());
+            assertEquals(FunctionDeclarationStatement.class, statement.getClass());
 
-            FunctionDeclaration funcDeclaration = (FunctionDeclaration) statement;
+            FunctionDeclarationStatement funcDeclaration = (FunctionDeclarationStatement) statement;
             assertNotNull(funcDeclaration);
             assertEquals("foo", funcDeclaration.getFunctionName());
 
