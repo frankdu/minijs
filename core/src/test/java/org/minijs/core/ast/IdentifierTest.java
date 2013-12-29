@@ -11,7 +11,14 @@ public class IdentifierTest extends BaseParserTest {
     @Test
     public void testIdentifier() {
         String[] ids = {
-                "_i", "i", "j_1", "$i"
+                "_i",
+                "i",
+                "j_1",
+                "$i",
+                "a3",
+                "_a3",
+                "tom",
+                "type_A",
         };
 
         for (String id : ids) {
